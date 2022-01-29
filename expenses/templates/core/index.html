@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <!-- Модальное окно добавление статьи затрат -->
+  <div class="modal fade" id="addCostItemModal" tabindex="-1"
+       aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Добавить статью
+            затрат</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"
+                  aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Форма добавления
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary"
+                  data-bs-dismiss="modal">Отмена
+          </button>
+          <button type="button" class="btn btn-primary">Добавить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row row-cols-1 row-cols-md-2" style="margin-top: 50px">
+      <div class="col">
+        <div class="card">
+          <div class="card-header"
+               style="background-color: #EC673A; color: white;">
+            Статьи затрат
+          </div>
+          <div class="card-body">
+            <div class="container" style="margin-bottom: 20px">
+              <select class="form-select shadow-none" size="10"
+                      aria-label="size 3 select example">
+                <option selected>Авиаперевозка</option>
+                <option value="1">Заработная плата</option>
+                <option value="2">Упаковка</option>
+                <option value="3">Перевозка собственным транспортом</option>
+              </select>
+            </div>
+            <div class="d-flex flex-row-reverse">
+              <button type="button" class="btn btn-danger shadow-none"
+                      style="margin-left: 3px" data-bs-toggle="modal"
+                      data-bs-target="#addCostItemModal">
+                Удалить
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col d-flex align-items-stretch">
+        <div class="card" style="width: 100%;">
+          <div class="card-header"
+               style="background-color: #EC673A; color: white;">
+            Добавить Статью затрат
+          </div>
+          <div class="card-body">
+            <div class="container main-area-list">
+              <form>
+                <div class="mb-3">
+                  <label for="exampleInputEmail1"
+                         class="form-label">Название</label>
+                  <input type="email" class="form-control shadow-none"
+                         id="exampleInputEmail1" aria-describedby="emailHelp">
+                  <div id="emailHelp" class="form-text">Введите название статьи
+                    затрат
+                  </div>
+                </div>
+                <div class="d-flex flex-row-reverse">
+                  <button type="submit" class="btn btn-primary shadow-none"
+                          style="background-color: #5895CE; margin-left: 3px"
+                          data-bs-toggle="modal"
+                          data-bs-target="#addCostItemModal">
+                    Добавить
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row row-cols-1 row-cols-md-2" style="margin-top: 20px">
+      <div class="col">
+        <div class="card">
+          <div class="card-header"
+               style="background-color: #EC673A; color: white;">
+            Отчеты
+          </div>
+          <div class="card-body">
+            <div class="list-group">
+              <a href="https://yandex.ru"
+                 class="list-group-item list-group-item-action">Сформировать
+                Отчет 1</a>
+              <a href="#" class="list-group-item list-group-item-action">Сформировать
+                Отчет 2</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col d-flex align-items-stretch">
+        <div class="card" style="width: 100%;">
+          <div class="card-header"
+               style="background-color: #EC673A; color: white;">
+            Действия Бизнес-процессов
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-4 d-flex align-items-center
+              justify-content-center">
+                <div class="col-4 alert alert-success flex-fill" role="alert"
+                     style="margin-bottom: 0;">
+                  Установлено
+                </div>
+              </div>
+              <div class="col-4 d-flex align-items-center
+              justify-content-center">
+                <button type="button"
+                        class="btn btn-primary shadow-none flex-fill"
+                        style="background-color: #5895CE; margin-left: 3px"
+                        data-bs-toggle="modal"
+                        data-bs-target="#addCostItemModal">
+                  Установить
+                </button>
+              </div>
+              <div class="col-4 d-flex align-items-center justify-content-center">
+                <button type="button"
+                        class="btn btn-danger shadow-none flex-fill"
+                        style="margin-left: 3px" data-bs-toggle="modal"
+                        data-bs-target="#addCostItemModal">
+                  Удалить
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

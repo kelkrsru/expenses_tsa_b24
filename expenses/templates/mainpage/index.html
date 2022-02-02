@@ -1,29 +1,9 @@
 {% extends 'base.html' %}
 
+{% block title %}{{ title }}{% endblock %}
 {% block content %}
-  <!-- Модальное окно добавление статьи затрат -->
-  <div class="modal fade" id="addCostItemModal" tabindex="-1"
-       aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Добавить статью
-            затрат</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"
-                  aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          Форма добавления
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary"
-                  data-bs-dismiss="modal">Отмена
-          </button>
-          <button type="button" class="btn btn-primary">Добавить</button>
-        </div>
-      </div>
-    </div>
-  </div>
+
+  {% load user_filters %}
   <div class="container">
     <div class="row row-cols-1 row-cols-md-2" style="margin-top: 50px">
       <div class="col">
@@ -33,22 +13,20 @@
             Статьи затрат
           </div>
           <div class="card-body">
-            <div class="container" style="margin-bottom: 20px">
-              <select class="form-select shadow-none" size="10"
-                      aria-label="size 3 select example">
-                <option selected>Авиаперевозка</option>
-                <option value="1">Заработная плата</option>
-                <option value="2">Упаковка</option>
-                <option value="3">Перевозка собственным транспортом</option>
-              </select>
-            </div>
-            <div class="d-flex flex-row-reverse">
-              <button type="button" class="btn btn-danger shadow-none"
-                      style="margin-left: 3px" data-bs-toggle="modal"
-                      data-bs-target="#addCostItemModal">
-                Удалить
-              </button>
-            </div>
+            <form action="{% url 'mainpage:index' %}" method="post">
+              <div class="container" style="margin-bottom: 20px">
+                {{ list_cost_item_form.cost_items|addclass:'form-select shadow-none select-size-10' }}
+              </div>
+              <div class="d-flex flex-row-reverse">
+                <input
+                        type="submit"
+                        name="del_cost_item"
+                        class="btn btn-danger shadow-none"
+                        style="margin-left: 3px"
+                        value="Удалить"
+                >
+              </div>
+            </form>
           </div>
         </div>
       </div>
@@ -59,26 +37,30 @@
             Добавить Статью затрат
           </div>
           <div class="card-body">
-            <div class="container main-area-list">
-              <form>
+            <div class="container">
+              <!-- Форма добавления Статьи затрат -->
+              <form action="{% url 'mainpage:index' %}" method="post">
                 <div class="mb-3">
                   <label for="exampleInputEmail1"
-                         class="form-label">Название</label>
-                  <input type="email" class="form-control shadow-none"
-                         id="exampleInputEmail1" aria-describedby="emailHelp">
-                  <div id="emailHelp" class="form-text">Введите название статьи
-                    затрат
+                         class="form-label">
+                    {{ add_cost_item_form.name.label }}</label>
+                  {{ add_cost_item_form.name.errors }}
+                  {{ add_cost_item_form.name|addclass:'form-control shadow-none' }}
+                  <div class="form-text">
+                    {{ add_cost_item_form.name.help_text }}
                   </div>
                 </div>
                 <div class="d-flex flex-row-reverse">
-                  <button type="submit" class="btn btn-primary shadow-none"
+                  <input
+                          type="submit"
+                          name="add_cost_item"
+                          class="btn btn-primary shadow-none"
                           style="background-color: #5895CE; margin-left: 3px"
-                          data-bs-toggle="modal"
-                          data-bs-target="#addCostItemModal">
-                    Добавить
-                  </button>
+                          value="Добавить"
+                  >
                 </div>
               </form>
+              <!-- Конец Форма добавления Статьи затрат -->
             </div>
           </div>
         </div>

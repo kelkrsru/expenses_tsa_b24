@@ -1,7 +1,78 @@
+body {
+    font-family: "Open Sans", serif;
+    color: #545C6F;
+}
+
+nav span {
+    color: white;
+    font-weight: bold;
+}
+
+table td{
+    color: #545C6F !important;
+}
+
+.table-margin-top {
+    margin-top: 30px;
+}
+
+.tr-green {
+    background-color: #9ECE00;
+}
+
+.navbar-light {
+    background-color: #3BC8F5;
+}
+
+.footer {
+    background-color: #3BC8F5;
+    margin-top: 50px;
+    color: white;
+}
+
 .errorlist {
-    color: red;
+    color: #FF5B55;
 }
 
 .select-size-10 {
     height: 15em;
+}
+
+.card-stretch {
+    width: 100%;
+}
+
+.card-header {
+    background-color: #FF5B55;
+    color: white;
+}
+
+.btn-danger {
+    background-color: #FF5B55;
+    color: white;
+    border-color: #FF5B55;
+}
+
+.btn-primary {
+    background-color: #3BC8F5;
+    color: white;
+    border-color: #3BC8F5;
+}
+
+.row-cards {
+    margin-top: 50px;
+}
+
+form select {
+    margin-bottom: 20px;
+    color: #545C6F !important;
+}
+
+.alert-success {
+    background-color: #9ECE00;
+    color: white;
+}
+
+.list-group-item {
+    color: #545C6F;
 }

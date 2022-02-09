@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, reverse
+from django.views.decorators.clickjacking import xframe_options_exempt
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponseRedirect
 
@@ -6,6 +7,7 @@ from .models import CostItems, Portals
 from .forms import AddCostItemForm, ListCostItemForm
 
 
+@xframe_options_exempt
 @csrf_exempt
 def index(request):
     """Метод главной страницы"""

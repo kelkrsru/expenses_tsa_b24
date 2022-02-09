@@ -3,73 +3,87 @@
 {% block title %}{{ title }}{% endblock %}
 {% block content %}
   <div class="container">
-    <table class="table table-border">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Наименование услуги</th>
-          <th scope="col">Цена, руб.</th>
-          <th scope="col">Кол-во</th>
-          <th scope="col">Сумма, руб.</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>Доставка</td>
-          <td>10 000</td>
-          <td>2</td>
-          <td>20 000</td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="card">
-      <div class="card-header"
-               style="background-color: #EC673A; color: white;">
-        Затраты
+    {% for product in products %}
+      <table class="table table-border table-margin-top">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Наименование услуги</th>
+            <th scope="col">Цена, руб.</th>
+            <th scope="col">Кол-во</th>
+            <th scope="col">Сумма, руб.</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="tr-green">
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ product.product_name }}</td>
+            <td>{{ product.product_cost }}</td>
+            <td>{{ product.product_count }}</td>
+            <td>{{ product.product_sum }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="card">
+        <div class="card-header">
+          Затраты
+        </div>
+        <div class="card-body">
+          <table class="table table-border table-striped">
+            <thead>
+              <tr>
+                <th class="col-3" scope="col">Статья затрат</th>
+                <th class="col-2" scope="col">Сумма, руб.</th>
+                <th class="col-2" scope="col">Груз</th>
+                <th class="col-2" scope="col">Компания</th>
+                <th class="col-2" scope="col">Сотрудник</th>
+                <th class="col-1" scope="col">Действия</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% load user_filters %}
+              {% for expense in expenses %}
+                {% if expense.product_id == product.product_id %}
+                  <tr>
+                    <td>{{ expense.cost_item_id }}</td>
+                    <td>{{ expense.expense}}</td>
+                    <td>{{ expense.cargo_number|emptyvalue }}</td>
+                    <td>{{ expense.company_name|emptyvalue }}</td>
+                    <td>{{ expense.employee_name|emptyvalue }}</td>
+                    <td>
+                      <a
+                              href="
+{% url 'dealcard:edit_expense' expense.pk %}"
+                              class="btn btn-primary shadow-none"
+                              title="Изменить"
+                      >
+                        🗘
+                      </a>
+                      <a
+                              href="
+{% url 'dealcard:delete_expense' expense.pk %}"
+                              class="btn btn-danger shadow-none"
+                              title="Удалить"
+                      >
+                        ✖
+                      </a>
+                    </td>
+                  </tr>
+                {% endif %}
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card-footer">
+          <a
+                  href="{% url 'dealcard:add_expense' %}?id={{ product.product_id }}"
+                  class="btn btn-primary shadow-none"
+          >
+            Добавить затраты к услуге
+          </a>
+        </div>
       </div>
-      <div class="card-body">
-        <table class="table table-border">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Статья затрат</th>
-              <th scope="col">Сумма, руб.</th>
-              <th scope="col">Груз</th>
-              <th scope="col">Компания</th>
-              <th scope="col">Сотрудник</th>
-              <th scope="col">Действия</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>ГСМ</td>
-              <td>5 000</td>
-              <td>АК000012</td>
-              <td>ООО "Заправка"</td>
-              <td>Иванов И.И.</td>
-              <td>
-                <input
-                        type="submit"
-                        name="del_cost"
-                        class="btn btn-danger shadow-none"
-                        value="Удалить"
-                >
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="card-footer">
-        <a
-                href="{% url 'dealcard:add_expense' %}"
-                class="btn btn-primary shadow-none"
-                style="background-color: #5895CE; margin-left: 3px"
-        >
-          Добавить затраты к услуге
-        </a>
-      </div>
-    </div>
+    {% endfor %}
   </div>
 {% endblock %}

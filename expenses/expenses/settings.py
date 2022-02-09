@@ -14,7 +14,7 @@ SECRET_KEY = 'django-insecure-4^-0%^f%vtwu3i*!_=qy(h(v-z6x+5*_2r5_m17#lo53w#nr!)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['expenses.krasprogress24.ru', '127.0.0.1']
 
 
 # Application definition
@@ -68,8 +68,14 @@ WSGI_APPLICATION = 'expenses.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'HOST': 'a317220.mysql.mchost.ru',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'a317220_expenses',
+        'USER': 'a317220_expenses',
+        'PASSWORD': 'VTUd35js1K',
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
     }
 }
 
@@ -109,9 +115,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = ('/home/httpd/vhosts/krasprogress24.ru/subdomains/expenses'
+               '/httpdocs/static/')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# CSRF_COOKIE_SAMESITE = None
+# CSRF_TRUSTED_ORIGINS = ['https://tsa.bitrix24.ru/']
+# CSRF_COOKIE_SECURE = True

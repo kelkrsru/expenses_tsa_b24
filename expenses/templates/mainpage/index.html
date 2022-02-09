@@ -5,24 +5,22 @@
 
   {% load user_filters %}
   <div class="container">
-    <div class="row row-cols-1 row-cols-md-2" style="margin-top: 50px">
+    <div class="row row-cols-1 row-cols-md-2 row-cards">
+      <!-- Карточка списка статей затрат -->
       <div class="col">
-        <div class="card">
-          <div class="card-header"
-               style="background-color: #EC673A; color: white;">
+        <div class="card card-stretch">
+          <div class="card-header">
             Статьи затрат
           </div>
           <div class="card-body">
             <form action="{% url 'mainpage:index' %}" method="post">
-              <div class="container" style="margin-bottom: 20px">
-                {{ list_cost_item_form.cost_items|addclass:'form-select shadow-none select-size-10' }}
-              </div>
+              {% csrf_token %}
+              {{ list_cost_item_form.cost_items|addclass:'form-select shadow-none select-size-10' }}
               <div class="d-flex flex-row-reverse">
                 <input
                         type="submit"
                         name="del_cost_item"
                         class="btn btn-danger shadow-none"
-                        style="margin-left: 3px"
                         value="Удалить"
                 >
               </div>
@@ -30,16 +28,17 @@
           </div>
         </div>
       </div>
+      <!-- Конец карточки списка Статей затрат -->
+      <!-- Карточка добавления статей затрат -->
       <div class="col d-flex align-items-stretch">
-        <div class="card" style="width: 100%;">
-          <div class="card-header"
-               style="background-color: #EC673A; color: white;">
+        <div class="card card-stretch">
+          <div class="card-header">
             Добавить Статью затрат
           </div>
           <div class="card-body">
             <div class="container">
-              <!-- Форма добавления Статьи затрат -->
               <form action="{% url 'mainpage:index' %}" method="post">
+                {% csrf_token %}
                 <div class="mb-3">
                   <label for="exampleInputEmail1"
                          class="form-label">
@@ -55,24 +54,23 @@
                           type="submit"
                           name="add_cost_item"
                           class="btn btn-primary shadow-none"
-                          style="background-color: #5895CE; margin-left: 3px"
                           value="Добавить"
                   >
                 </div>
               </form>
-              <!-- Конец Форма добавления Статьи затрат -->
             </div>
           </div>
         </div>
       </div>
+      <!-- Конец карточки добавления Статей затрат -->
     </div>
   </div>
   <div class="container">
-    <div class="row row-cols-1 row-cols-md-2" style="margin-top: 20px">
+    <div class="row row-cols-1 row-cols-md-2 row-cards">
+      <!-- Карточка Отчетов -->
       <div class="col">
-        <div class="card">
-          <div class="card-header"
-               style="background-color: #EC673A; color: white;">
+        <div class="card card-stretch">
+          <div class="card-header">
             Отчеты
           </div>
           <div class="card-body">
@@ -86,18 +84,18 @@
           </div>
         </div>
       </div>
+      <!-- Конец карточки Отчетов -->
+      <!-- Карточка БП -->
       <div class="col d-flex align-items-stretch">
-        <div class="card" style="width: 100%;">
-          <div class="card-header"
-               style="background-color: #EC673A; color: white;">
+        <div class="card card-stretch">
+          <div class="card-header">
             Действия Бизнес-процессов
           </div>
           <div class="card-body">
             <div class="row">
               <div class="col-4 d-flex align-items-center
               justify-content-center">
-                <div class="col-4 alert alert-success flex-fill" role="alert"
-                     style="margin-bottom: 0;">
+                <div class="col-4 alert alert-success flex-fill" role="alert">
                   Установлено
                 </div>
               </div>
@@ -105,7 +103,6 @@
               justify-content-center">
                 <button type="button"
                         class="btn btn-primary shadow-none flex-fill"
-                        style="background-color: #5895CE; margin-left: 3px"
                         data-bs-toggle="modal"
                         data-bs-target="#addCostItemModal">
                   Установить
@@ -114,8 +111,7 @@
               <div class="col-4 d-flex align-items-center justify-content-center">
                 <button type="button"
                         class="btn btn-danger shadow-none flex-fill"
-                        style="margin-left: 3px" data-bs-toggle="modal"
-                        data-bs-target="#addCostItemModal">
+                >
                   Удалить
                 </button>
               </div>
@@ -123,6 +119,7 @@
           </div>
         </div>
       </div>
+      <!-- Конец карточки БП -->
     </div>
   </div>
 {% endblock %}

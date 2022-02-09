@@ -24,6 +24,7 @@ class ExpensesAdmin(admin.ModelAdmin):
         'create_date',
         'update_date',
         'portal_id',
+        'deal_id',
     )
 
 

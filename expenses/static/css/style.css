@@ -1,5 +1,5 @@
 body {
-    font-family: "Open Sans", serif;
+    font-family: "Open Sans", "Arial", sans-serif;
     color: #545C6F;
 }
 
@@ -45,6 +45,18 @@ table td{
 .card-header {
     background-color: #FF5B55;
     color: white;
+}
+
+.card-header.blue {
+    background-color: #3BC8F5;
+}
+
+.card span {
+    font-weight: bold;
+}
+
+.card-font-14 {
+    font-size: 0.93rem;
 }
 
 .btn-danger {

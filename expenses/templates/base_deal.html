@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {% include 'includes/meta_tags.html'%}
+    {% include 'includes/head_icons.html' %}
+    <title>{% block title %}Приложение Затраты {% endblock %}</title>
+  </head>
+  <body>
+    <header>
+    </header>
+    <main>
+      {% block content %}
+
+      {% endblock %}
+    </main>
+    <footer style="margin-bottom: 50px">
+      {% block footer %}
+
+      {% endblock %}
+    </footer>
+    {% include 'includes/scripts.html' %}
+    {% block resize %}
+    {% endblock %}
+  </body>
+</html>

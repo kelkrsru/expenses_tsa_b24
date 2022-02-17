@@ -1,13 +1,11 @@
-{% extends 'base.html' %}
+{% extends 'base_deal.html' %}
 
-{% block title %}
-  Добавить затраты к услуге
-{% endblock %}
+{% block title %}{% if is_edit %}Изменить затраты{% else %}Добавить затраты к услуге{% endif %}{% endblock %}
 {% block content %}
   <div class="row justify-content-center">
     <div class="col-md-8 p-5">
       <div class="card">
-        <div class="card-header">Добавить Затраты к услуге</div>
+        <div class="card-header">{% if is_edit %}Изменить затраты{% else %}Добавить затраты к услуге{% endif %}</div>
           <div class="card-body">
           {% load user_filters %} {# Загружаем фильтры #}
               {% if form.errors %}
@@ -27,9 +25,9 @@
 
               <form method="post" action="
                     {% if is_edit %}
-                      {% url 'dealcard:edit_expense' expense_id %}
+                      {% url 'dealcard:edit_expense' expense_id %}?deal_id={{ deal_id }}&member_id={{ member_id }}
                     {% else %}
-                      {% url 'dealcard:add_expense' %}?id={{ request.GET.id }}
+                      {% url 'dealcard:add_expense' %}?deal_id={{ deal_id }}&product_id={{ product_id }}&member_id={{ member_id }}
                     {% endif %}">
               {% csrf_token %}
               {# Выводим поля в цикле, по отдельности #}
@@ -62,10 +60,10 @@
                         type="submit"
                         class="btn btn-primary shadow-none"
                 >
-                  Добавить
+                  {% if is_edit %}Сохранить{% else %}Добавить{% endif %}
                 </button>
                 <a
-                        href="{% url 'dealcard:card' %}"
+                        href="{% url 'dealcard:card' %}?member_id={{ member_id }}&deal_id={{ deal_id }}"
                         class="btn btn-danger shadow-none"
                 >
                   Отмена
@@ -76,4 +74,9 @@
         </div> <!-- card -->
       </div> <!-- col -->
   </div> <!-- row -->
+{% endblock %}
+{% block resize %}
+  <script type="text/javascript">
+    BX24.resizeWindow(1024, 860);
+  </script>
 {% endblock %}

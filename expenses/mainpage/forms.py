@@ -8,19 +8,25 @@ class AddCostItemForm(forms.ModelForm):
 
     class Meta:
         model = CostItems
-        fields = ('name',)
+        fields = ('name', 'portal')
+        widgets = {
+            'portal': forms.HiddenInput(),
+        }
 
 
-class ListCostItemForm(forms.ModelForm):
+class CostItemForm(forms.ModelForm):
     """Форма просмотра существующих Статей затрат"""
 
-    cost_items = forms.ModelChoiceField(
-        queryset=CostItems.objects.all(),
-        label='Статьи затрат',
-        empty_label=None,
-        widget=forms.SelectMultiple(),
-    )
+    def __init__(self, *args, **kwargs):
+        portal = kwargs.pop('portal')
+        super(CostItemForm, self).__init__(*args, **kwargs)
+        self.fields['name'] = forms.ModelChoiceField(
+            queryset=CostItems.objects.filter(portal=portal),
+            label='Статьи затрат',
+            empty_label=None,
+            widget=forms.SelectMultiple(),
+        )
 
     class Meta:
         model = CostItems
-        fields = ('cost_items',)
+        fields = ('name',)

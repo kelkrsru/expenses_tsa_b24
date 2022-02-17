@@ -1,3 +1,5 @@
+import decimal
+
 from django import template
 
 register = template.Library()
@@ -18,6 +20,16 @@ def emptyvalue(field):
     if not field:
         return '---'
     return field
+
+
+@register.filter()
+def to_int(value):
+    return int(value)
+
+
+@register.simple_tag()
+def multiply(qty, unit_price, *args, **kwargs):
+    return round(decimal.Decimal(qty) * int(unit_price), 2)
 
 
 register.filter('addclass', addclass)

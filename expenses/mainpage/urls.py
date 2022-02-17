@@ -5,4 +5,5 @@ app_name = 'mainpage'
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('install/', views.install, name='install'),
 ]

@@ -13,9 +13,9 @@
             Статьи затрат
           </div>
           <div class="card-body">
-            <form action="{% url 'mainpage:index' %}" method="post">
+            <form action="{% url 'mainpage:index' %}?member_id={{ member_id }}" method="post">
               {% csrf_token %}
-              {{ list_cost_item_form.cost_items|addclass:'form-select shadow-none select-size-10' }}
+              {{ list_cost_item_form.name|addclass:'form-select shadow-none select-size-10' }}
               <div class="d-flex flex-row-reverse">
                 <input
                         type="submit"
@@ -37,18 +37,48 @@
           </div>
           <div class="card-body">
             <div class="container">
-              <form action="{% url 'mainpage:index' %}" method="post">
-                {% csrf_token %}
-                <div class="mb-3">
-                  <label for="exampleInputEmail1"
-                         class="form-label">
-                    {{ add_cost_item_form.name.label }}</label>
-                  {{ add_cost_item_form.name.errors }}
-                  {{ add_cost_item_form.name|addclass:'form-control shadow-none' }}
-                  <div class="form-text">
-                    {{ add_cost_item_form.name.help_text }}
+              {% if add_cost_item_form.errors %}
+                {% for field in add_cost_item_form %}
+                  {% for error in field.errors %}
+                    <div class="alert alert-danger">
+                      {{ error|escape }}
+                    </div>
+                  {% endfor %}
+                {% endfor %}
+                {% for error in add_cost_item_form.non_field_errors %}
+                  <div class="alert alert-danger">
+                    {{ error|escape }}
                   </div>
-                </div>
+                {% endfor %}
+              {% endif %}
+              <form action="{% url 'mainpage:index' %}?member_id={{ member_id }}" method="post">
+                {% csrf_token %}
+                {% for field in add_cost_item_form %}
+                  <div class="form-group row my-3">
+                    {% if not field.is_hidden %}
+                      <label for="{{ field.id_for_label }}">
+                        {{ field.label }}
+                          {% if field.field.required %}
+                            <span class="required text-danger">*</span>
+                          {% endif %}
+                      </label>
+                    {% endif %}
+                    {# К полю ввода добавляем атрибут class #}
+                    {% if field|fieldtype == 'Select' %}
+                      {{ field|addclass:'form-select shadow-none' }}
+                    {% else %}
+                      {{ field|addclass:'form-control shadow-none' }}
+                    {% endif %}
+                      {% if field.help_text %}
+                        <small
+                           id="{{ field.id_for_label }}-help"
+                           class="form-text text-muted"
+                        >
+                          {{ field.help_text|safe }}
+                        </small>
+                      {% endif %}
+                  </div>
+                {% endfor %}
                 <div class="d-flex flex-row-reverse">
                   <input
                           type="submit"

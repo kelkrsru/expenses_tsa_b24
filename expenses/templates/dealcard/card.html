@@ -5,7 +5,7 @@
   <div class="container" style="margin-top: 50px">
     <div class="row row-cols-2 row-cols-lg-4 row-cards">
       <div class="col">
-        <div class="card text-center">
+        <div class="card card-calc text-center">
           <div class="card-header blue">
             <span>Выручка, руб.</span>
           </div>
@@ -15,7 +15,7 @@
         </div>
       </div>
       <div class="col">
-        <div class="card text-center">
+        <div class="card card-calc text-center">
           <div class="card-header blue">
             <span>Затраты, руб.</span>
           </div>
@@ -25,7 +25,7 @@
         </div>
       </div>
       <div class="col">
-        <div class="card text-center">
+        <div class="card card-calc text-center">
           <div class="card-header blue">
             <span>Прибыль, руб.</span>
           </div>
@@ -35,7 +35,7 @@
         </div>
       </div>
       <div class="col">
-        <div class="card text-center">
+        <div class="card card-calc text-center">
           <div class="card-header blue">
             <span>Рентабельность, %</span>
           </div>
@@ -49,7 +49,7 @@
   <div class="container">
     {% load user_filters %}
     {% for product in bx24_obj.deal_products %}
-      <table class="table table-border table-margin-top">
+      <table class="table table-border table-margin-top table-products">
         <thead>
           <tr>
             <th class="col-1" scope="col">#</th>
@@ -69,7 +69,7 @@
           </tr>
         </tbody>
       </table>
-      <div class="card card-font-14">
+      <div class="card card-expenses">
         <div class="card-header">
           Затраты
         </div>
@@ -100,14 +100,14 @@
                     <td>
                       <a
                               href="{% url 'dealcard:edit_expense' expense.pk %}?deal_id={{ deal_id }}&member_id={{ portal.member_id }}"
-                              class="btn btn-primary shadow-none"
+                              class="btn btn-primary shadow-none btn-small"
                               title="Изменить"
                       >
                         🗘
                       </a>
                       <a
                               href="{% url 'dealcard:delete_expense' expense.pk %}?deal_id={{ deal_id }}&member_id={{ portal.member_id }}"
-                              class="btn btn-danger shadow-none"
+                              class="btn btn-danger shadow-none btn-small"
                               title="Удалить"
                       >
                         ✖

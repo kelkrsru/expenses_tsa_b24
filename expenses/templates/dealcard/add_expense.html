@@ -76,6 +76,31 @@
   </div> <!-- row -->
 {% endblock %}
 {% block resize %}
+  <script>
+    $(document).ready(function ()
+    {
+        $('#id_company').select2({
+            theme: "bootstrap-5",
+            selectionCssClass: "shadow-none",
+        });
+        $('#id_cost_item').select2({
+            theme: "bootstrap-5",
+            selectionCssClass: "shadow-none",
+        });
+        $('#id_employee').select2({
+            theme: "bootstrap-5",
+            selectionCssClass: "shadow-none",
+        });
+        $('#id_cargo').select2({
+            theme: "bootstrap-5",
+            selectionCssClass: "shadow-none",
+        });
+        $('#id_type_cost').select2({
+            theme: "bootstrap-5",
+            selectionCssClass: "shadow-none",
+        });
+    });
+  </script>
   <script type="text/javascript">
     BX24.resizeWindow(1024, 860);
   </script>

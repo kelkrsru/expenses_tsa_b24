@@ -133,7 +133,11 @@ class Expenses(models.Model):
     type_cost = models.CharField(
         verbose_name='Вид оплаты',
         max_length=50,
-        choices=[('Наличный', 'Наличный')],
+        choices=[
+            ('Наличный (карты)', 'Наличный (карты)'),
+            ('Расчетный счет', 'Расчетный счет'),
+            ('В кассу', 'В кассу'),
+        ],
         blank=True,
         null=True,
     )

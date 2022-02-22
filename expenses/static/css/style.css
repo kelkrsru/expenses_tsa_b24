@@ -12,6 +12,10 @@ table td{
     color: #545C6F !important;
 }
 
+.table-products {
+    font-size: 14px;
+}
+
 .table-margin-top {
     margin-top: 30px;
 }
@@ -51,12 +55,17 @@ table td{
     background-color: #3BC8F5;
 }
 
-.card span {
+.card.card-calc {
+    font-size: 14px;
     font-weight: bold;
 }
 
-.card-font-14 {
-    font-size: 0.93rem;
+.card.card-expenses {
+    font-size: 12px !important;
+}
+
+.card.card-expenses a {
+    font-size: 12px;
 }
 
 .btn-danger {
@@ -71,12 +80,17 @@ table td{
     border-color: #3BC8F5;
 }
 
+.btn-small {
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+}
+
 .row-cards {
     margin-top: 50px;
 }
 
 form select {
-    margin-bottom: 20px;
     color: #545C6F !important;
 }
 
@@ -87,4 +101,8 @@ form select {
 
 .list-group-item {
     color: #545C6F;
+}
+
+.select2-container--bootstrap-5 {
+    padding: 0;
 }

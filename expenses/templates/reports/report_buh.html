@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+  <div class="container mt-3 filter-menu">
+    <div class="card card-calc">
+      <div class="card-header blue">
+        Действия
+      </div>
+      <div class="card-body">
+        {% load user_filters %}
+        <form method="post" action="{% url 'reports:report_buh' %}?member_id={{ member_id }}">
+          {% csrf_token %}
+          <div class="row row-cols-3 mb-2">
+            {% for field in form %}
+              <div class="form-group col">
+                <label for="{{ field.id_for_label }}">
+                  {{ field.label }}
+                    {% if field.field.required %}
+                      <span class="required text-danger">*</span>
+                    {% endif %}
+                </label>
+                {% if field|fieldtype == 'Select' %}
+                  {{ field|addclass:'form-select shadow-none mb-3' }}
+                {% else %}
+                  {{ field|addclass:'form-control shadow-none mb-3' }}
+                {% endif %}
+                  {% if field.help_text %}
+                    <small
+                       id="{{ field.id_for_label }}-help"
+                       class="form-text text-muted"
+                    >
+                      {{ field.help_text|safe }}
+                    </small>
+                  {% endif %}
+              </div>
+            {% endfor %}
+          </div>
+          <div class="row row-cols-auto justify-content-end">
+            <div class="col">
+              <button
+                      type="submit"
+                      class="btn btn-primary shadow-none"
+              >Применить</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="card-footer justify-content-end">
+        <div class="row row-cols-auto justify-content-end">
+          <div class="col">
+            <button class="btn btn-success shadow-none" onclick="HtmlTOExcel('xlsx')">Выгрузить в Excel</button>
+          </div>
+          <div class="col">
+            <a
+                    href="{% url 'mainpage:index' %}?member_id={{ member_id }}"
+                    class="btn btn-danger shadow-none"
+            >На главную</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  <script>
+</script>
+
+
+  </div>
+  <div class="container report-area">
+    <table class="table table-border table-striped table-reports" id="report-buh">
+      <thead>
+        <tr>
+          <th>Дата</th>
+          <th>Поставщик</th>
+          <th>Сделка</th>
+          <th>Сумма, руб.</th>
+        </tr>
+      </thead>
+      <tbody>
+          {% for expense in expenses_for_reports %}
+            <tr>
+              <td>{{ expense.date|date:"d.m.Y" }}</td>
+              {% if expense.company %}
+                <td><a href="https://{{ deal.portal_name }}/crm/company/details/{{ expense.company_id }}/" target="_blank">{{ expense.company }}</a></td>
+              {% else %}
+                <td>Компания не указана</td>
+              {% endif %}
+              <td><a href="https://{{ deal.portal_name }}/crm/deal/details/{{ expense.deal_id }}/" target="_blank">Сделка №{{ expense.deal_id }}</a></td>
+              <td>{{ expense.sum_expense }}</td>
+            </tr>
+          {% endfor %}
+      </tbody>
+    </table>
+
+  </div>
+{% endblock %}
+{% block scripts %}
+  <script>
+    $(document).ready(function() {
+      $("#report-buh").DataTable({
+        searching: false,
+        paging: false,
+        info: false,
+        autoWidth: false,
+        language: {
+          zeroRecords: 'Записи не найдены',
+          emptyTable: 'Записи не найдены',
+        },
+        columnDefs: [
+          { className: 'col-2', targets: 0 },
+          { className: 'col-4', targets: [1, 2] },
+          { className: 'col-2', targets: 3 },
+        ]
+      });
+    });
+  </script>
+  <script>
+    $(document).ready(function() {
+      $('#import-excel').attr('disabled', false);
+      var excel_data = $('#report-buh').html();
+      $('#xls_data').val(excel_data);
+    });
+  </script>
+  <script>
+    function HtmlTOExcel(type, fun, dl) {
+      var elt = document.getElementById('report-buh');
+      var wb = XLSX.utils.table_to_book(elt, { sheet: "ReportBuh" });
+      return dl ?
+          XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }) :
+          XLSX.writeFile(wb, fun || ('report-buh.' + (type || 'xlsx')));
+    }
+  </script>
+  <script>
+    $(document).ready(function ()
+    {
+        $('#id_company').select2({
+            theme: "bootstrap-5",
+            selectionCssClass: "shadow-none",
+        });
+    });
+  </script>
+{% endblock %}

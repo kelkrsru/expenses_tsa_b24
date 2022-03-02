@@ -29,7 +29,7 @@ INSTALLED_APPS = [
     'core',
     'mainpage',
     'dealcard',
-    'django_select2',
+    'reports',
 ]
 
 MIDDLEWARE = [

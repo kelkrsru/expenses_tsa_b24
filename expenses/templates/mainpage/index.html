@@ -20,7 +20,7 @@
                 <input
                         type="submit"
                         name="del_cost_item"
-                        class="btn btn-danger shadow-none"
+                        class="btn btn-danger shadow-none mt-2"
                         value="Удалить"
                 >
               </div>
@@ -105,18 +105,15 @@
           </div>
           <div class="card-body">
             <div class="list-group">
-              <a href="https://yandex.ru"
-                 class="list-group-item list-group-item-action">Сформировать
-                Отчет 1</a>
-              <a href="#" class="list-group-item list-group-item-action">Сформировать
-                Отчет 2</a>
+              <a href="{% url 'reports:report_finance' %}?member_id={{ member_id }}" class="list-group-item list-group-item-action">Сформировать отчет финансиста</a>
+              <a href="{% url 'reports:report_buh' %}?member_id={{ member_id }}" class="list-group-item list-group-item-action">Сформировать отчет бухгалтера</a>
             </div>
           </div>
         </div>
       </div>
       <!-- Конец карточки Отчетов -->
       <!-- Карточка БП -->
-      <div class="col d-flex align-items-stretch">
+      <!--<div class="col d-flex align-items-stretch">
         <div class="card card-stretch">
           <div class="card-header">
             Действия Бизнес-процессов
@@ -148,7 +145,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div>-->
       <!-- Конец карточки БП -->
     </div>
   </div>

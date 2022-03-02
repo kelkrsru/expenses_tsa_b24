@@ -227,9 +227,12 @@ class ObjBitrix24:
         self.bx24._access_token = portal.auth_id
         self.users = None
         self.deal_products = None
+        self.deal_props = None
         self.companies = None
+        self.company = None
         self.cargo = None
         self.current_user = None
+        self.user = None
 
     @staticmethod
     def check_error(result):
@@ -259,6 +262,13 @@ class ObjBitrix24:
         result = self.bx24.call(method_rest)
         self.current_user = self.check_error(result)
 
+    def get_user(self, user_id):
+        """Получить пользователя по id"""
+        method_rest = 'user.get'
+        params = {'id': user_id}
+        result = self.bx24.call(method_rest, params)
+        self.user = self.check_error(result)
+
     def get_deal_products(self):
         """Получить все продукты сделки"""
 
@@ -266,6 +276,14 @@ class ObjBitrix24:
         params = {'id': self.deal_id}
         result = self.bx24.call(method_rest, params)
         self.deal_products = self.check_error(result)
+
+    def get_deal_props(self):
+        """Получить все данные по сделке"""
+
+        method_rest = 'crm.deal.get'
+        params = {'id': self.deal_id}
+        result = self.bx24.call(method_rest, params)
+        self.deal_props = self.check_error(result)
 
     def get_companies(self, field_filter):
         """Получить все компании, которые могут иметь затраты"""
@@ -279,6 +297,16 @@ class ObjBitrix24:
         }
         result = self.bx24.call(method_rest, params)
         self.companies = self.check_error(result)
+
+    def get_company(self, company_id):
+        """Получить компанию по id"""
+
+        method_rest = 'crm.company.get'
+        params = {
+            'id': company_id,
+        }
+        result = self.bx24.call(method_rest, params)
+        self.company = self.check_error(result)
 
     def get_cargo(self, smart_id):
         """Получить все грузы сделки"""

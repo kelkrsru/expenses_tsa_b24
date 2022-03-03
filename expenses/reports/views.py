@@ -127,13 +127,22 @@ def report_buh(request):
             sum_expense = decimal.Decimal(request.POST.get('sum'))
             if sum_expense != expense.expense:
                 continue
+        if request.POST.get('no_company_visible') == 'n' and not expense.company:
+            continue
+        if request.POST.get('document'):
+            document = request.POST.get('document')
+            if not expense.document:
+                continue
+            elif not document.lower() in expense.document.lower():
+                continue
         expenses_for_reports.append(
             {
                 'date': expense.create_date,
                 'company': expense.company,
-                'company_id': expense.company_id,
+                'company_id': expense.company,
                 'deal_id': expense.deal_id,
                 'sum_expense': expense.expense,
+                'document': expense.document,
                 'portal_name': portal.name,
             }
         )

@@ -37,16 +37,10 @@ class ReportFinanceForm(forms.Form):
 class ReportBuhForm(forms.Form):
     """Форма параметров отчета бухгалтера"""
 
-    # DEAL_TYPE_CHOICES = [
-    #     ('close', 'Закрытые'),
-    #     ('open', 'Открытые'),
-    #     ('all', 'Все'),
-    # ]
-    #
-    # deal_type = forms.ChoiceField(
-    #     label='Тип сделок',
-    #     choices=DEAL_TYPE_CHOICES,
-    # )
+    NO_COMPANY_VISIBLE_CHOICES = [
+        ('y', 'Показывать'),
+        ('n', 'Не показывать'),
+    ]
 
     start_date = forms.DateField(
         label='Начальная дата',
@@ -66,9 +60,19 @@ class ReportBuhForm(forms.Form):
         required=False,
     )
 
+    no_company_visible = forms.ChoiceField(
+        label='Показывать без поставщика',
+        choices=NO_COMPANY_VISIBLE_CHOICES,
+    )
+
     company = forms.ModelChoiceField(
         label='Поставщик',
         queryset=CompaniesExpense.objects.all(),
+        required=False,
+    )
+
+    document = forms.CharField(
+        label='Документ',
         required=False,
     )
 

@@ -42,6 +42,8 @@ def card(request):
         bx24_obj = ObjBitrix24(portal, deal_id)
         # Получаем сделку и товары
         bx24_obj.get_deal_products()
+        if not bx24_obj.deal_products:
+            return render(request, 'dealcard/no_products.html')
         # Получаем грузы
         bx24_obj.get_cargo(SMART_ID)
         for item in bx24_obj.cargo:

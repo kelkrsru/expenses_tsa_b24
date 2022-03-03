@@ -1,0 +1,12 @@
+{% extends 'base_deal.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+  <div class="container mt-5">
+    <div class="alert alert-warning" role="alert">
+      В данной сделке отсутствуют товары. Внесение затрат невозможно.<br>
+      1. Перейдите на вкладку "Товары" и добавьте позиции.<br>
+      2. Обновите страницу в браузере.
+    </div>
+  </div>
+{% endblock %}

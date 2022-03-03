@@ -72,6 +72,7 @@
           <th>Дата</th>
           <th>Поставщик</th>
           <th>Сделка</th>
+          <th>Документ</th>
           <th>Сумма, руб.</th>
         </tr>
       </thead>
@@ -80,11 +81,16 @@
             <tr>
               <td>{{ expense.date|date:"d.m.Y" }}</td>
               {% if expense.company %}
-                <td><a href="https://{{ deal.portal_name }}/crm/company/details/{{ expense.company_id }}/" target="_blank">{{ expense.company }}</a></td>
+                <td><a href="https://{{ expense.portal_name }}/crm/company/details/{{ expense.company_id.id_b24 }}/" target="_blank">{{ expense.company }}</a></td>
               {% else %}
-                <td>Компания не указана</td>
+                <td>---</td>
               {% endif %}
-              <td><a href="https://{{ deal.portal_name }}/crm/deal/details/{{ expense.deal_id }}/" target="_blank">Сделка №{{ expense.deal_id }}</a></td>
+              <td><a href="https://{{ expense.portal_name }}/crm/deal/details/{{ expense.deal_id }}/" target="_blank">Сделка №{{ expense.deal_id }}</a></td>
+              {% if expense.document %}
+                <td>{{ expense.document }}</td>
+              {% else %}
+                <td>---</td>
+              {% endif %}
               <td>{{ expense.sum_expense }}</td>
             </tr>
           {% endfor %}
@@ -106,9 +112,8 @@
           emptyTable: 'Записи не найдены',
         },
         columnDefs: [
-          { className: 'col-2', targets: 0 },
-          { className: 'col-4', targets: [1, 2] },
-          { className: 'col-2', targets: 3 },
+          { className: 'col-2', targets: [0, 2, 4] },
+          { className: 'col-3', targets: [1, 3] },
         ]
       });
     });

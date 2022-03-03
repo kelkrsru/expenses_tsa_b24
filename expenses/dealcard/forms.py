@@ -30,4 +30,4 @@ class ExpensesForm(forms.ModelForm):
     class Meta:
         model = Expenses
         fields = ('cost_item', 'expense', 'cargo', 'company',
-                  'employee', 'type_cost')
+                  'employee', 'type_cost', 'document')

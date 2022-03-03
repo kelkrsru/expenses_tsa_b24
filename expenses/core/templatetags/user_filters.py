@@ -29,7 +29,7 @@ def to_int(value):
 
 @register.simple_tag()
 def multiply(qty, unit_price, *args, **kwargs):
-    return round(decimal.Decimal(qty) * int(unit_price), 2)
+    return round(decimal.Decimal(qty) * decimal.Decimal(unit_price), 2)
 
 
 register.filter('addclass', addclass)

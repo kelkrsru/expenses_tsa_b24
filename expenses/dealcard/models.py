@@ -141,6 +141,12 @@ class Expenses(models.Model):
         blank=True,
         null=True,
     )
+    document = models.CharField(
+        verbose_name='Документ',
+        max_length=255,
+        blank=True,
+        null=True,
+    )
     create_date = models.DateTimeField(
         verbose_name='Дата создания',
         auto_now_add=True,

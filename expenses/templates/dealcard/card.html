@@ -53,18 +53,22 @@
         <thead>
           <tr>
             <th class="col-1" scope="col">#</th>
-            <th class="col-5" scope="col">Наименование услуги</th>
+            <th class="col-3" scope="col">Наименование услуги</th>
             <th class="col-2" scope="col">Цена, руб.</th>
-            <th class="col-2" scope="col">Кол-во</th>
-            <th class="col-2" scope="col">Сумма, руб.</th>
+            <th class="col-1" scope="col">Кол-во</th>
+            <th class="col-2" scope="col">Сумма без НДС, руб.</th>
+            <th class="col-1" scope="col">НДС, %</th>
+            <th class="col-2" scope="col">Сумма с НДС, руб.</th>
           </tr>
         </thead>
         <tbody>
           <tr class="tr-green">
             <th scope="row">{{ forloop.counter }}</th>
             <td>{{ product.PRODUCT_NAME }}</td>
-            <td>{{ product.PRICE|floatformat:2 }}</td>
+            <td>{{ product.PRICE_EXCLUSIVE|floatformat:2 }}</td>
             <td>{{ product.QUANTITY }}</td>
+            <td>{% multiply product.PRICE_EXCLUSIVE product.QUANTITY %}</td>
+            <td>{{ product.TAX_RATE }}</td>
             <td>{% multiply product.PRICE product.QUANTITY %}</td>
           </tr>
         </tbody>
@@ -79,10 +83,11 @@
               <tr>
                 <th class="col-3" scope="col">Статья затрат</th>
                 <th class="col-1" scope="col">Сумма, руб.</th>
-                <th class="col-2" scope="col">Груз</th>
+                <th class="col-1" scope="col">Груз</th>
                 <th class="col-2" scope="col">Компания</th>
-                <th class="col-2" scope="col">Сотрудник</th>
+                <th class="col-1" scope="col">Сотрудник</th>
                 <th class="col-1" scope="col">Вид оплаты</th>
+                <th class="col-2" scope="col">Документ</th>
                 <th class="col-1" scope="col">Действия</th>
               </tr>
             </thead>
@@ -97,6 +102,7 @@
                     <td>{{ expense.company|emptyvalue }}</td>
                     <td>{{ expense.employee|emptyvalue }}</td>
                     <td>{{ expense.type_cost|emptyvalue }}</td>
+                    <td>{{ expense.document|emptyvalue }}</td>
                     <td>
                       <a
                               href="{% url 'dealcard:edit_expense' expense.pk %}?deal_id={{ deal_id }}&member_id={{ portal.member_id }}"

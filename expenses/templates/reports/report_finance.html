@@ -83,7 +83,11 @@
             <tr>
               <td><a href="https://{{ deal.portal_name }}/crm/deal/details/{{ deal.deal_id }}/" target="_blank">Сделка №{{ deal.deal_id }}</a></td>
               <td>{{ deal.manager }}</td>
-              <td><a href="https://{{ deal.portal_name }}/crm/company/details/{{ deal.company_id }}/" target="_blank">{{ deal.company }}</a></td>
+              {% if deal.company_id == 'error' %}
+                <td class="table-danger">{{ deal.company }}</td>
+              {% else %}
+                <td><a href="https://{{ deal.portal_name }}/crm/company/details/{{ deal.company_id }}/" target="_blank">{{ deal.company }}</a></td>
+              {% endif %}
               <td>{{ deal.opportunity }}</td>
               <td>{{ deal.sum_expenses }}</td>
               <td>{{ deal.profitability }}</td>

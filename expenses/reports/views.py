@@ -51,8 +51,23 @@ def report_finance(request):
             "%Y-%m-%d").date()
         if not (parse_date(start_date) <= deal_date <= parse_date(end_date)):
             continue
-        bx24_obj.get_user(bx24_obj.deal_props['ASSIGNED_BY_ID'])
-        bx24_obj.get_company(bx24_obj.deal_props['COMPANY_ID'])
+
+        try:
+            bx24_obj.get_user(bx24_obj.deal_props['ASSIGNED_BY_ID'])
+        except RuntimeError as err:
+            context = {
+                'error_name': 'RuntimeError',
+                'error_description': err.args[1],
+            }
+            return render(request, 'error.html', context)
+        try:
+            bx24_obj.get_company(bx24_obj.deal_props['COMPANY_ID'])
+        except RuntimeError:
+            bx24_obj.company = {
+                'ID': 'error',
+                'TITLE': 'Нет компании в сделке',
+            }
+
         manager = '{name} {last_name}'.format(
             name=bx24_obj.user[0]['NAME'],
             last_name=bx24_obj.user[0]['LAST_NAME']

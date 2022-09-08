@@ -59,14 +59,12 @@ WSGI_APPLICATION = 'expenses.wsgi.application'
 
 DATABASES = {
     'default': {
-        'HOST': 'a317220.mysql.mchost.ru',
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'a317220_expenses',
-        'USER': 'a317220_expenses',
-        'PASSWORD': 'VTUd35js1K',
-        'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-        },
+        'ENGINE': os.getenv('DB_ENGINE', default='django.db.backends.sqlite3'),
+        'NAME': os.getenv('DB_NAME', default=os.path.join(BASE_DIR, 'db.sqlite3')),
+        'USER': os.getenv('POSTGRES_USER', default='test'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', default='test'),
+        'HOST': os.getenv('DB_HOST', default='localhost'),
+        'PORT': os.getenv('DB_PORT', default='5432')
     }
 }
 

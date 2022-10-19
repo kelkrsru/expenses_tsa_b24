@@ -10,8 +10,8 @@ from pybitrix24 import Bitrix24
 from .models import CostItems, Portals
 from .forms import AddCostItemForm, CostItemForm
 
-CLIENT_ID: str = 'local.6319a2518c8a29.92303118'
-CLIENT_SECRET: str = 'vxVMw6IvKDu2hkU57kp28S1ELgrlL6BZ5kTogmnOHYTPW8jH27'
+CLIENT_ID: str = 'local.63467384b9f750.01806162'
+CLIENT_SECRET: str = 'Phmcn8NpEzGqssG2Zj7m4tIaLylHHSj4QoIOFVr8Z7qqFJbsGN'
 
 
 @xframe_options_exempt

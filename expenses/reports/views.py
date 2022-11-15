@@ -39,7 +39,7 @@ def report_finance(request):
                       .order_by()
                       )
 
-    if expenses_deals:
+    if expenses_deals.count() != 0:
         for expense in expenses_deals:
             bx24_obj = ObjBitrix24(portal, expense['deal_id'])
             bx24_obj.get_deal_props()

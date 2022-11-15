@@ -39,59 +39,60 @@ def report_finance(request):
                       .order_by()
                       )
 
-    for expense in expenses_deals:
-        bx24_obj = ObjBitrix24(portal, expense['deal_id'])
-        bx24_obj.get_deal_props()
-        if deal_type == 'close' and bx24_obj.deal_props['OPENED'] == 'Y':
-            continue
-        elif deal_type == 'open' and bx24_obj.deal_props['CLOSED'] == 'Y':
-            continue
-        deal_date = datetime.datetime.strptime(
-            bx24_obj.deal_props['DATE_CREATE'].split('T')[0],
-            "%Y-%m-%d").date()
-        if not (parse_date(start_date) <= deal_date <= parse_date(end_date)):
-            continue
+    if expenses_deals:
+        for expense in expenses_deals:
+            bx24_obj = ObjBitrix24(portal, expense['deal_id'])
+            bx24_obj.get_deal_props()
+            if deal_type == 'close' and bx24_obj.deal_props['OPENED'] == 'Y':
+                continue
+            elif deal_type == 'open' and bx24_obj.deal_props['CLOSED'] == 'Y':
+                continue
+            deal_date = datetime.datetime.strptime(
+                bx24_obj.deal_props['DATE_CREATE'].split('T')[0],
+                "%Y-%m-%d").date()
+            if not (parse_date(start_date) <= deal_date <= parse_date(end_date)):
+                continue
 
-        try:
-            bx24_obj.get_user(bx24_obj.deal_props['ASSIGNED_BY_ID'])
-        except RuntimeError as err:
-            context = {
-                'error_name': 'RuntimeError',
-                'error_description': err.args[1],
-            }
-            return render(request, 'error.html', context)
-        try:
-            bx24_obj.get_company(bx24_obj.deal_props['COMPANY_ID'])
-        except RuntimeError:
-            bx24_obj.company = {
-                'ID': 'error',
-                'TITLE': 'Нет компании в сделке',
-            }
+            try:
+                bx24_obj.get_user(bx24_obj.deal_props['ASSIGNED_BY_ID'])
+            except RuntimeError as err:
+                context = {
+                    'error_name': 'RuntimeError',
+                    'error_description': err.args[1],
+                }
+                return render(request, 'error.html', context)
+            try:
+                bx24_obj.get_company(bx24_obj.deal_props['COMPANY_ID'])
+            except RuntimeError:
+                bx24_obj.company = {
+                    'ID': 'error',
+                    'TITLE': 'Нет компании в сделке',
+                }
 
-        manager = '{name} {last_name}'.format(
-            name=bx24_obj.user[0]['NAME'],
-            last_name=bx24_obj.user[0]['LAST_NAME']
-        )
-        company = bx24_obj.company['TITLE']
-        company_id = bx24_obj.company['ID']
-        opportunity = bx24_obj.deal_props['OPPORTUNITY']
-        sum_expenses = expense['sum']
-        income = decimal.Decimal(opportunity) - sum_expenses
-        profitability = round(income/decimal.Decimal(opportunity)*100)
-        deals_for_reports.append(
-            {
-                'deal_id': expense['deal_id'],
-                'manager': manager,
-                'opportunity': opportunity,
-                'sum_expenses': sum_expenses,
-                'profitability': profitability,
-                'income': income,
-                'portal_name': portal.name,
-                'company': company,
-                'company_id': company_id,
-            }
-        )
-    context['deals_for_reports'] = deals_for_reports
+            manager = '{name} {last_name}'.format(
+                name=bx24_obj.user[0]['NAME'],
+                last_name=bx24_obj.user[0]['LAST_NAME']
+            )
+            company = bx24_obj.company['TITLE']
+            company_id = bx24_obj.company['ID']
+            opportunity = bx24_obj.deal_props['OPPORTUNITY']
+            sum_expenses = expense['sum']
+            income = decimal.Decimal(opportunity) - sum_expenses
+            profitability = round(income/decimal.Decimal(opportunity)*100)
+            deals_for_reports.append(
+                {
+                    'deal_id': expense['deal_id'],
+                    'manager': manager,
+                    'opportunity': opportunity,
+                    'sum_expenses': sum_expenses,
+                    'profitability': profitability,
+                    'income': income,
+                    'portal_name': portal.name,
+                    'company': company,
+                    'company_id': company_id,
+                }
+            )
+        context['deals_for_reports'] = deals_for_reports
     return render(request, template, context)
 
 

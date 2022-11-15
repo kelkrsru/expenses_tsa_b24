@@ -128,7 +128,7 @@
   <script>
     function HtmlTOExcel(type, fun, dl) {
       var elt = document.getElementById('report-buh');
-      var wb = XLSX.utils.table_to_book(elt, { sheet: "ReportBuh" });
+      var wb = XLSX.utils.table_to_book(elt, { sheet: "ReportBuh", raw: true });
       return dl ?
           XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }) :
           XLSX.writeFile(wb, fun || ('report-buh.' + (type || 'xlsx')));

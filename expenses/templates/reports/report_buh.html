@@ -128,7 +128,12 @@
   <script>
     function HtmlTOExcel(type, fun, dl) {
       var elt = document.getElementById('report-buh');
-      var wb = XLSX.utils.table_to_book(elt, { sheet: "ReportBuh", raw: true });
+      var wb = XLSX.utils.table_to_book(elt, { sheet: "ReportBuh", raw: false });
+      var ws = wb.Sheets["ReportBuh"];
+      ws["E2"].z = "0.00"; //  format the cell
+
+      delete ws["E2"].w; // delete old formatted text if it exists
+      XLSX.utils.format_cell(ws["E2"]); // refresh cell
       return dl ?
           XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }) :
           XLSX.writeFile(wb, fun || ('report-buh.' + (type || 'xlsx')));

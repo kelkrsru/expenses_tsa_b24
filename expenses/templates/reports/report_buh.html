@@ -128,7 +128,7 @@
   <script>
     function HtmlTOExcel(type, fun, dl) {
       var elt = document.getElementById('report-buh');
-      var wb = XLSX.utils.table_to_book(elt, { sheet: "ReportBuh", raw: false });
+      var wb = XLSX.utils.table_to_book(elt, { sheet: "ReportBuh", raw: true });
       var ws = wb.Sheets["ReportBuh"];
       ws["E2"].z = "0.00"; //  format the cell
 

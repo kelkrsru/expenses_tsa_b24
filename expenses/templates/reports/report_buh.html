@@ -130,12 +130,12 @@
       var elt = document.getElementById('report-buh');
       var wb = XLSX.utils.table_to_book(elt, { sheet: "ReportBuh", raw: true });
       var ws = wb.Sheets["ReportBuh"];
-      ws["E2"].z = "0.00"; //  format the cell
-
-      delete ws["E2"].w; // delete old formatted text if it exists
-      XLSX.utils.format_cell(ws["E2"]); // refresh cell
+      {#ws["E2"].z = "0.00"; //  format the cell#}
+      {##}
+      {#delete ws["E2"].w; // delete old formatted text if it exists#}
+      {#XLSX.utils.format_cell(ws["E2"]); // refresh cell#}
       return dl ?
-          XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }) :
+          XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64', raw: true }) :
           XLSX.writeFile(wb, fun || ('report-buh.' + (type || 'xlsx')));
     }
   </script>

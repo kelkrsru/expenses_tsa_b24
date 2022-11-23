@@ -291,11 +291,13 @@ class ObjBitrix24:
         """Получить все компании, которые могут иметь затраты"""
 
         method_rest = 'crm.company.list'
+        start = 0
         params = {
             'filter': {
                 field_filter: 1,
             },
-            'select': ['TITLE']
+            'select': ['TITLE'],
+            'start': start
         }
         result = self.bx24.call(method_rest, params)
         if 'error' in result:
@@ -304,13 +306,7 @@ class ObjBitrix24:
             self.companies = result['result']
             if 'next' in result:
                 while 'next' in result:
-                    params = {
-                        'filter': {
-                            field_filter: 1,
-                        },
-                        'select': ['TITLE'],
-                        'start': result['next']
-                    }
+                    start = result['next']
                     result = self.bx24.call(method_rest, params)
                     self.companies += result['result']
         else:

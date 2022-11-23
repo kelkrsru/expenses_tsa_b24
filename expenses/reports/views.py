@@ -38,8 +38,6 @@ def report_finance(request):
                       .annotate(sum=Sum('expense'))
                       .order_by()
                       )
-    print(expenses_deals.count())
-    print(expenses_deals)
     if expenses_deals.count() != 0:
         for expense in expenses_deals:
             bx24_obj = ObjBitrix24(portal, expense['deal_id'])

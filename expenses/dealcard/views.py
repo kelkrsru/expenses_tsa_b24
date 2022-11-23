@@ -298,7 +298,23 @@ class ObjBitrix24:
             'select': ['TITLE']
         }
         result = self.bx24.call(method_rest, params)
-        self.companies = self.check_error(result)
+        if 'error' in result:
+            raise RuntimeError(result['error'], result['error_description'])
+        elif 'result' in result:
+            self.companies = result['result']
+            if 'next' in result:
+                while 'next' in result:
+                    params = {
+                        'filter': {
+                            field_filter: 1,
+                        },
+                        'select': ['TITLE'],
+                        'start': result['next']
+                    }
+                    result = self.bx24.call(method_rest, params)
+                    self.companies.append(result['result'])
+        else:
+            raise RuntimeError('Error', 'No description error')
 
     def get_company(self, company_id):
         """Получить компанию по id"""

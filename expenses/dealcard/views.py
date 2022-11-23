@@ -312,7 +312,7 @@ class ObjBitrix24:
                         'start': result['next']
                     }
                     result = self.bx24.call(method_rest, params)
-                    self.companies.append(result['result'])
+                    self.companies += result['result']
         else:
             raise RuntimeError('Error', 'No description error')
 

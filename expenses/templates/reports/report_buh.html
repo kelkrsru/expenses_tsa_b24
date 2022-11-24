@@ -144,6 +144,7 @@
       for (let col of [4]) {
         formatColumn(ws, col, currency)
       }
+      XLSX.utils.book_append_sheet(wb, ws, 'Details')
       {#ws["E2"].z = "0.00"; //  format the cell#}
       {##}
       {#delete ws["E2"].w; // delete old formatted text if it exists#}

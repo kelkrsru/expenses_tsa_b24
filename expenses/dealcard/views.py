@@ -99,7 +99,7 @@ def card(request):
     # Выручка
     for product in bx24_obj.deal_products:
         calculations['proceeds'] += (decimal.Decimal(product['PRICE'])
-                                     * int(product['QUANTITY']))
+                                     * decimal.Decimal(product['QUANTITY']))
         calculations['proceeds'] = round(calculations['proceeds'], 2)
 
     # Затраты

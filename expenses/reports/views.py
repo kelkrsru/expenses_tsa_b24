@@ -84,7 +84,7 @@ def report_finance(request):
             )
             company = bx24_obj.company['TITLE']
             company_id = bx24_obj.company['ID']
-            opportunity = bx24_obj.deal_props['OPPORTUNITY']
+            opportunity = decimal.Decimal(bx24_obj.deal_props['OPPORTUNITY'])
             sum_expenses = expense['sum']
             income = decimal.Decimal(opportunity) - sum_expenses
             profitability = round(income/decimal.Decimal(opportunity)*100)

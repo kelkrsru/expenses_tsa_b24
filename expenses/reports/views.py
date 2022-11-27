@@ -44,7 +44,7 @@ def report_finance(request):
             try:
                 bx24_obj.get_deal_props()
             except RuntimeError as ex:
-                if ex.args[0] == 'Not found':
+                if ex.args[1] == 'Not found':
                     continue
                 else:
                     context = {

@@ -41,7 +41,17 @@ def report_finance(request):
     if expenses_deals.count() != 0:
         for expense in expenses_deals:
             bx24_obj = ObjBitrix24(portal, expense['deal_id'])
-            bx24_obj.get_deal_props()
+            try:
+                bx24_obj.get_deal_props()
+            except RuntimeError as ex:
+                if ex.args[0] == 'Not found':
+                    continue
+                else:
+                    context = {
+                        'error_name': ex.args[0],
+                        'error_description': ex.args[1],
+                    }
+                    return render(request, 'error.html', context)
             if deal_type == 'close' and bx24_obj.deal_props['OPENED'] == 'Y':
                 continue
             elif deal_type == 'open' and bx24_obj.deal_props['CLOSED'] == 'Y':

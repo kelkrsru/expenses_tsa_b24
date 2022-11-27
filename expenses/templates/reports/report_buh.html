@@ -49,7 +49,7 @@
       <div class="card-footer justify-content-end">
         <div class="row row-cols-auto justify-content-end">
           <div class="col">
-            <button class="btn btn-success shadow-none" onclick="HtmlTOExcel('xlsx')">Выгрузить в Excel</button>
+            <button class="btn btn-success shadow-none" onclick="tableToExcel('report-buh')">Выгрузить в Excel</button>
           </div>
           <div class="col">
             <a
@@ -126,33 +126,35 @@
     });
   </script>
   <script>
-    function formatColumn(worksheet, col, fmt) {
-      const range = XLSX.utils.decode_range(worksheet['!ref'])
-      // note: range.s.r + 1 skips the header row
-      for (let row = range.s.r + 1; row <= range.e.r; ++row) {
-        const ref = XLSX.utils.encode_cell({ r: row, c: col })
-        if (worksheet[ref] && worksheet[ref].t === 'n') {
-          worksheet[ref].z = fmt
-        }
-      }
-    }
     function HtmlTOExcel(type, fun, dl) {
       var elt = document.getElementById('report-buh');
       var wb = XLSX.utils.table_to_book(elt, { sheet: "ReportBuh", raw: true });
       var ws = wb.Sheets["ReportBuh"];
-      const currency = '$0.00'
-      for (let col of [4]) {
-        formatColumn(ws, col, currency)
-      }
       XLSX.utils.book_append_sheet(wb, ws, 'Details')
-      {#ws["E2"].z = "0.00"; //  format the cell#}
-      {##}
-      {#delete ws["E2"].w; // delete old formatted text if it exists#}
-      {#XLSX.utils.format_cell(ws["E2"]); // refresh cell#}
       return dl ?
           XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64'}) :
           XLSX.writeFile(wb, 'report-buh.xlsx', {ignoreEC: false});
     }
+    var tableToExcel = (function() {
+      var uri = 'data:application/vnd.ms-excel;base64,',
+        template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>',
+        base64 = function(s) {
+          return window.btoa(unescape(encodeURIComponent(s)))
+        },
+        format = function(s, c) {
+          return s.replace(/{(\w+)}/g, function(m, p) {
+            return c[p];
+          })
+        }
+      return function(table, name) {
+        if (!table.nodeType) table = document.getElementById(table)
+        var ctx = {
+          worksheet: name || 'Worksheet',
+          table: table.innerHTML
+        }
+        window.location.href = uri + base64(format(template, ctx))
+      }
+    })()
   </script>
   <script>
     $(document).ready(function ()

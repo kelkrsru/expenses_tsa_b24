@@ -126,35 +126,31 @@
     });
   </script>
   <script>
-    function HtmlTOExcel(type, fun, dl) {
-      var elt = document.getElementById('report-buh');
-      var wb = XLSX.utils.table_to_book(elt, { sheet: "ReportBuh", raw: true });
-      var ws = wb.Sheets["ReportBuh"];
-      XLSX.utils.book_append_sheet(wb, ws, 'Details')
-      return dl ?
-          XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64'}) :
-          XLSX.writeFile(wb, 'report-buh.xlsx', {ignoreEC: false});
-    }
     var tableToExcel = (function() {
       var uri = 'data:application/vnd.ms-excel;base64,',
-        template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>',
-        base64 = function(s) {
-          return window.btoa(unescape(encodeURIComponent(s)))
-        },
-        format = function(s, c) {
-          return s.replace(/{(\w+)}/g, function(m, p) {
-            return c[p];
+      template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>',
+      base64 = function(s) {return window.btoa(unescape(encodeURIComponent(s)))},
+      format = function(s, c) {
+          return s.replace(/{(\w+)}/g, function (m, p) {
+              return c[p];
           })
-        }
+      },
+      downloadURI = function(uri, name) {
+        var link = document.createElement("a");
+        link.download = name;
+        link.href = uri;
+        link.click();
+      }
       return function(table, name) {
         if (!table.nodeType) table = document.getElementById(table)
         var ctx = {
           worksheet: name || 'Worksheet',
           table: table.innerHTML
         }
-        window.location.href = uri + base64(format(template, ctx))
+        var resuri = uri + base64(format(template, ctx))
+        downloadURI(resuri, 'ReportBuh.xlsx');
       }
-    })()
+    })();
   </script>
   <script>
     $(document).ready(function ()

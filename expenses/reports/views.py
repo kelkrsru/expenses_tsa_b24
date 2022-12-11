@@ -44,6 +44,7 @@ def report_finance(request):
             bx24_obj = ObjBitrix24(portal, expense['deal_id'])
             try:
                 bx24_obj.get_deal_props()
+                time.sleep(1)
             except RuntimeError as ex:
                 if ex.args[1] == 'Not found':
                     continue

@@ -103,7 +103,6 @@ def report_finance(request):
                 }
             )
         context['deals_for_reports'] = deals_for_reports
-        time.sleep(1)
     return render(request, template, context)
 
 

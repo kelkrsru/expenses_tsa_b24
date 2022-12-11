@@ -65,6 +65,7 @@ def report_finance(request):
 
             try:
                 bx24_obj.get_user(bx24_obj.deal_props['ASSIGNED_BY_ID'])
+                time.sleep(1)
             except RuntimeError as err:
                 context = {
                     'error_name': 'RuntimeError',

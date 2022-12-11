@@ -63,29 +63,28 @@ def report_finance(request):
             if not (parse_date(start_date) <= deal_date <= parse_date(end_date)):
                 continue
 
-            try:
-                bx24_obj.get_user(bx24_obj.deal_props['ASSIGNED_BY_ID'])
-                time.sleep(1)
-            except RuntimeError as err:
-                context = {
-                    'error_name': 'RuntimeError',
-                    'error_description': err.args[1],
-                }
-                return render(request, 'error.html', context)
-            try:
-                bx24_obj.get_company(bx24_obj.deal_props['COMPANY_ID'])
-            except RuntimeError:
-                bx24_obj.company = {
-                    'ID': 'error',
-                    'TITLE': 'Нет компании в сделке',
-                }
-
-            manager = '{name} {last_name}'.format(
-                name=bx24_obj.user[0]['NAME'],
-                last_name=bx24_obj.user[0]['LAST_NAME']
-            )
-            company = bx24_obj.company['TITLE']
-            company_id = bx24_obj.company['ID']
+            # try:
+            #     bx24_obj.get_user(bx24_obj.deal_props['ASSIGNED_BY_ID'])
+            # except RuntimeError as err:
+            #     context = {
+            #         'error_name': 'RuntimeError',
+            #         'error_description': err.args[1],
+            #     }
+            #     return render(request, 'error.html', context)
+            # try:
+            #     bx24_obj.get_company(bx24_obj.deal_props['COMPANY_ID'])
+            # except RuntimeError:
+            #     bx24_obj.company = {
+            #         'ID': 'error',
+            #         'TITLE': 'Нет компании в сделке',
+            #     }
+            #
+            # manager = '{name} {last_name}'.format(
+            #     name=bx24_obj.user[0]['NAME'],
+            #     last_name=bx24_obj.user[0]['LAST_NAME']
+            # )
+            # company = bx24_obj.company['TITLE']
+            # company_id = bx24_obj.company['ID']
             opportunity = decimal.Decimal(bx24_obj.deal_props['OPPORTUNITY'])
             sum_expenses = expense['sum']
             income = decimal.Decimal(opportunity) - sum_expenses
@@ -93,14 +92,14 @@ def report_finance(request):
             deals_for_reports.append(
                 {
                     'deal_id': expense['deal_id'],
-                    'manager': manager,
+                    # 'manager': manager,
                     'opportunity': opportunity,
                     'sum_expenses': sum_expenses,
                     'profitability': profitability,
                     'income': income,
                     'portal_name': portal.name,
-                    'company': company,
-                    'company_id': company_id,
+                    # 'company': company,
+                    # 'company_id': company_id,
                 }
             )
         context['deals_for_reports'] = deals_for_reports

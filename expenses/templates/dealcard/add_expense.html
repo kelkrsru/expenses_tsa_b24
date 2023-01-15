@@ -86,15 +86,15 @@
           <form>
             <div class="mb-3">
               <label for="count" class="col-form-label">Количество:</label>
-              <input type="number" class="form-control" id="count" onkeyup="calculate_sum()" value="0">
+              <input type="text" class="form-control" id="count" onkeyup="calculate_sum()" value="0">
             </div>
             <div class="mb-3">
               <label for="price" class="col-form-label">Цена:</label>
-              <input type="number" class="form-control" id="price" onkeyup="calculate_sum()" value="0">
+              <input type="text" class="form-control" id="price" onkeyup="calculate_sum()" value="0">
             </div>
             <div class="mb-3">
               <label for="sum" class="col-form-label">Сумма:</label>
-              <input type="number" class="form-control" id="sum">
+              <input type="text" class="form-control" id="sum">
             </div>
           </form>
         </div>
@@ -112,6 +112,10 @@
       const modal = new bootstrap.Modal(document.querySelector('#modal_calc'));
       modal.show();
     });
+
+    $("#btn_save_sum").on("click", function () {
+        document.getElementById("id_expense").value = document.getElementById("sum").value;
+    })
 
     function calculate_sum() {
         const count = document.getElementById("count");

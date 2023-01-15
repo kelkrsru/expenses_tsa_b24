@@ -75,54 +75,54 @@
       </div> <!-- col -->
   </div> <!-- row -->
 
-  <div class="modal fade" id="modal_calc" tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Расчет суммы</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="mb-3">
-              <label for="count" class="col-form-label">Количество:</label>
-              <input type="text" class="form-control" id="count" onkeyup="calculate_sum()" value="0">
-            </div>
-            <div class="mb-3">
-              <label for="price" class="col-form-label">Цена:</label>
-              <input type="text" class="form-control" id="price" onkeyup="calculate_sum()" value="0">
-            </div>
-            <div class="mb-3">
-              <label for="sum" class="col-form-label">Сумма:</label>
-              <input type="text" class="form-control" id="sum">
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Закрыть</button>
-          <button type="button" class="btn btn-success" id="btn_save_sum" data-bs-dismiss="modal">Сохранить</button>
-        </div>
-      </div>
-    </div>
-  </div>
+{#  <div class="modal fade" id="modal_calc" tabindex="-1">#}
+{#    <div class="modal-dialog">#}
+{#      <div class="modal-content">#}
+{#        <div class="modal-header">#}
+{#          <h5 class="modal-title">Расчет суммы</h5>#}
+{#          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>#}
+{#        </div>#}
+{#        <div class="modal-body">#}
+{#          <form>#}
+{#            <div class="mb-3">#}
+{#              <label for="count" class="col-form-label">Количество:</label>#}
+{#              <input type="text" class="form-control" id="count" onkeyup="calculate_sum()" value="0">#}
+{#            </div>#}
+{#            <div class="mb-3">#}
+{#              <label for="price" class="col-form-label">Цена:</label>#}
+{#              <input type="text" class="form-control" id="price" onkeyup="calculate_sum()" value="0">#}
+{#            </div>#}
+{#            <div class="mb-3">#}
+{#              <label for="sum" class="col-form-label">Сумма:</label>#}
+{#              <input type="text" class="form-control" id="sum">#}
+{#            </div>#}
+{#          </form>#}
+{#        </div>#}
+{#        <div class="modal-footer">#}
+{#          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Закрыть</button>#}
+{#          <button type="button" class="btn btn-success" id="btn_save_sum" data-bs-dismiss="modal">Сохранить</button>#}
+{#        </div>#}
+{#      </div>#}
+{#    </div>#}
+{#  </div>#}
 {% endblock %}
 {% block resize %}
   <script>
-    $("#id_expense").focus(function() {
-      const modal = new bootstrap.Modal(document.querySelector('#modal_calc'));
-      modal.show();
-    });
-
-    $("#btn_save_sum").on("click", function () {
-        document.getElementById("id_expense").value = document.getElementById("sum").value;
-    })
-
-    function calculate_sum() {
-        const count = document.getElementById("count");
-        const price = document.getElementById("price");
-        const sum = document.getElementById("sum");
-        sum.value = (count.value * price.value).toFixed(2);
-    }
+    {#$("#id_expense").focus(function() {#}
+    {#  const modal = new bootstrap.Modal(document.querySelector('#modal_calc'));#}
+    {#  modal.show();#}
+    {#);#}
+    {##}
+    {#$("#btn_save_sum").on("click", function () {#}
+    {#    document.getElementById("id_expense").value = document.getElementById("sum").value;#}
+    {#)#}
+    {##}
+    {#function calculate_sum() {#}
+    {#    const count = document.getElementById("count");#}
+    {#    const price = document.getElementById("price");#}
+    {#    const sum = document.getElementById("sum");#}
+    {#    sum.value = (count.value * price.value).toFixed(2);#}
+    {##}
 
     $(document).ready(function ()
     {

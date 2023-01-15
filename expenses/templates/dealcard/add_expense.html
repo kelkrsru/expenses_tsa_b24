@@ -74,9 +74,45 @@
         </div> <!-- card -->
       </div> <!-- col -->
   </div> <!-- row -->
+
+  <div class="modal fade" id="modal_calc" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal_calc"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="count" class="col-form-label">Количество:</label>
+              <input type="number" class="form-control" id="count">
+            </div>
+            <div class="mb-3">
+              <label for="price" class="col-form-label">Цена:</label>
+              <input type="number" class="form-control" id="price">
+            </div>
+            <div class="mb-3">
+              <label for="sum" class="col-form-label">Сумма:</label>
+              <input type="number" class="form-control" id="sum">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal_calc">Закрыть</button>
+          <button type="button" class="btn btn-success">Сохранить</button>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
 {% block resize %}
   <script>
+    $("#id_expense").focus(function() {
+      const modal = new bootstrap.Modal(document.querySelector('#modal_calc'));
+      modal.show();
+    });
+
     $(document).ready(function ()
     {
         $('#id_company').select2({

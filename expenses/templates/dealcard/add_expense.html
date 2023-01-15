@@ -79,18 +79,18 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Title</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal_calc"></button>
+          <h5 class="modal-title">Расчет суммы</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
           <form>
             <div class="mb-3">
               <label for="count" class="col-form-label">Количество:</label>
-              <input type="number" class="form-control" id="count">
+              <input type="number" class="form-control" id="count" onkeypress="calculate_sum()" value="0">
             </div>
             <div class="mb-3">
               <label for="price" class="col-form-label">Цена:</label>
-              <input type="number" class="form-control" id="price">
+              <input type="number" class="form-control" id="price" onkeypress="calculate_sum()" value="0">
             </div>
             <div class="mb-3">
               <label for="sum" class="col-form-label">Сумма:</label>
@@ -99,8 +99,8 @@
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal_calc">Закрыть</button>
-          <button type="button" class="btn btn-success">Сохранить</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Закрыть</button>
+          <button type="button" class="btn btn-success" id="btn_save_sum">Сохранить</button>
         </div>
       </div>
     </div>
@@ -112,6 +112,13 @@
       const modal = new bootstrap.Modal(document.querySelector('#modal_calc'));
       modal.show();
     });
+
+    function calculate_sum() {
+        const count = document.getElementById("count");
+        const price = document.getElementById("price");
+        const sum = document.getElementById("sum");
+        sum.value = count * price;
+    }
 
     $(document).ready(function ()
     {

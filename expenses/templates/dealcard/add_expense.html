@@ -119,8 +119,10 @@
     {##}
     let count = document.getElementById('id_count');
     count.addEventListener('keyup', calculate_sum);
+    count.addEventListener('change', calculate_sum);
     let price = document.getElementById('id_price');
     price.addEventListener('keyup', calculate_sum);
+    price.addEventListener('change', calculate_sum);
 
     function calculate_sum() {
         const count = document.getElementById("id_count");

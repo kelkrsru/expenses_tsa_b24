@@ -148,18 +148,8 @@
             theme: "bootstrap-5",
             selectionCssClass: "shadow-none",
         });
-        const count = $('#id_count');
-        count.select2({
-          theme: "bootstrap-5",
-          selectionCssClass: "shadow-none",
-        });
-        count.addEventListener('onkeyup', calculate_sum);
-        const price = $('#id_price');
-        price.select2({
-          theme: "bootstrap-5",
-          selectionCssClass: "shadow-none",
-        });
-        price.addEventListener('onkeyup', calculate_sum);
+        $('#id_count').onkeyup = calculate_sum;
+        $('#id_price').onkeyup = calculate_sum;
     });
   </script>
   <script type="text/javascript">

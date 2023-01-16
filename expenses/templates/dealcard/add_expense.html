@@ -117,6 +117,11 @@
     {#    document.getElementById("id_expense").value = document.getElementById("sum").value;#}
     {#)#}
     {##}
+    let count = document.getElementById('id_count');
+    count.addEventListener('keyup', calculate_sum);
+    let price = document.getElementById('id_price');
+    price.addEventListener('keyup', calculate_sum);
+
     function calculate_sum() {
         const count = document.getElementById("id_count");
         const price = document.getElementById("id_price");
@@ -148,8 +153,6 @@
             theme: "bootstrap-5",
             selectionCssClass: "shadow-none",
         });
-        $('#id_count').onkeyup = calculate_sum;
-        $('#id_price').onkeyup = calculate_sum;
     });
   </script>
   <script type="text/javascript">

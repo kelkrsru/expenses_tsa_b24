@@ -41,7 +41,6 @@ class ExpensesForm(forms.ModelForm):
             queryset=Employee.objects.filter(portal=portal),
             label='Сотрудник'
         )
-        self.fields['count'] = 0
 
     class Meta:
         model = Expenses

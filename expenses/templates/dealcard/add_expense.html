@@ -117,12 +117,14 @@
     {#    document.getElementById("id_expense").value = document.getElementById("sum").value;#}
     {#)#}
     {##}
-    {#function calculate_sum() {#}
-    {#    const count = document.getElementById("count");#}
-    {#    const price = document.getElementById("price");#}
-    {#    const sum = document.getElementById("sum");#}
-    {#    sum.value = (count.value * price.value).toFixed(2);#}
-    {##}
+    function calculate_sum() {
+        const count = document.getElementById("id_count");
+        const price = document.getElementById("id_price");
+        const expense = document.getElementById("id_expense");
+        expense.value = (count.value * price.value).toFixed(2);
+    }
+
+
 
     $(document).ready(function ()
     {
@@ -146,6 +148,18 @@
             theme: "bootstrap-5",
             selectionCssClass: "shadow-none",
         });
+        const count = $('#id_count');
+        count.select2({
+          theme: "bootstrap-5",
+          selectionCssClass: "shadow-none",
+        });
+        count.addEventListener('onkeyup', calculate_sum);
+        const price = $('#id_price');
+        price.select2({
+          theme: "bootstrap-5",
+          selectionCssClass: "shadow-none",
+        });
+        price.addEventListener('onkeyup', calculate_sum);
     });
   </script>
   <script type="text/javascript">

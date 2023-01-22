@@ -60,7 +60,10 @@ def card(request):
                         portal=portal, owner=expense.owner,
                         product_id=bx24_obj.deal_products[pk].get('ID'),
                         cost_item=expense.cost_item, deal_id=deal_id,
-                        expense=expense.expense
+                        expense=expense.expense,
+                        company=expense.company,
+                        employee=expense.employee,
+                        type_cost=expense.type_cost,
                     )
             bx24_obj.update({'UF_CRM_1674380869': 0})
         # Получаем грузы

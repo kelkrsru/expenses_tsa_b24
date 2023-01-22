@@ -46,6 +46,12 @@ def card(request):
             return render(request, 'dealcard/no_products.html')
         bx24_obj.get_deal_props()
         if bx24_obj.deal_props.get('UF_CRM_1674380869'):
+            origin_deal_id = bx24_obj.deal_props.get('UF_CRM_1674380869')
+            origin_deal_expenses = Expenses.objects.filter(
+                portal=portal, deal_id=origin_deal_id
+            )
+            # origin_deal = ObjBitrix24(portal, origin_deal_id)
+            # origin_deal.get_deal_products()
             return render(request, 'error.html', {
                 'error_name': 'QueryError',
                 'error_description': "It's work"

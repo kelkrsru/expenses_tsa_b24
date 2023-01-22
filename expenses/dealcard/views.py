@@ -44,6 +44,12 @@ def card(request):
         bx24_obj.get_deal_products()
         if not bx24_obj.deal_products:
             return render(request, 'dealcard/no_products.html')
+        bx24_obj.get_deal_props()
+        if bx24_obj.deal_props.get('UF_CRM_1674380869'):
+            return render(request, 'error.html', {
+                'error_name': 'QueryError',
+                'error_description': "It's work"
+            })
         # Получаем грузы
         bx24_obj.get_cargo(SMART_ID)
         for item in bx24_obj.cargo:

@@ -47,15 +47,27 @@ def card(request):
         bx24_obj.get_deal_props()
         if bx24_obj.deal_props.get('UF_CRM_1674380869'):
             origin_deal_id = bx24_obj.deal_props.get('UF_CRM_1674380869')
-            origin_deal_expenses = Expenses.objects.filter(
-                portal=portal, deal_id=origin_deal_id
-            )
-            # origin_deal = ObjBitrix24(portal, origin_deal_id)
-            # origin_deal.get_deal_products()
-            return render(request, 'error.html', {
-                'error_name': 'QueryError',
-                'error_description': "It's work"
-            })
+            origin_deal = ObjBitrix24(portal, origin_deal_id)
+            origin_deal.get_deal_products()
+            for pk, product in enumerate(origin_deal.deal_products):
+                origin_deal_expenses = Expenses.objects.filter(
+                    portal=portal, deal_id=origin_deal_id,
+                    product_id=product.get('ID')
+                )
+                for expense in origin_deal_expenses:
+                    Expenses.objects.create(
+                        portal=portal, owner=expense.owner,
+                        product_id=bx24_obj.deal_products[pk].get('ID'),
+                        cost_item=expense.cost_item, deal_id=deal_id,
+                        expense=expense.expense
+                    )
+            #
+            #
+            #
+            # return render(request, 'error.html', {
+            #     'error_name': 'QueryError',
+            #     'error_description': origin_deal_expenses
+            # })
         # Получаем грузы
         bx24_obj.get_cargo(SMART_ID)
         for item in bx24_obj.cargo:

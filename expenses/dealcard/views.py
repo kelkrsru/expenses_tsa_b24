@@ -61,13 +61,7 @@ def card(request):
                         cost_item=expense.cost_item, deal_id=deal_id,
                         expense=expense.expense
                     )
-            #
-            #
-            #
-            # return render(request, 'error.html', {
-            #     'error_name': 'QueryError',
-            #     'error_description': origin_deal_expenses
-            # })
+            bx24_obj.update({'UF_CRM_1674380869': 0})
         # Получаем грузы
         bx24_obj.get_cargo(SMART_ID)
         for item in bx24_obj.cargo:
@@ -358,6 +352,16 @@ class ObjBitrix24:
         result = self.bx24.call(method_rest, params)
         result = self.check_error(result)
         self.cargo = result['items']
+
+    def update(self, fields):
+        """Обновить сделку."""
+        return self.check_error(self.bx24.call(
+            'crm.deal.update',
+            {
+                'id': self.deal_id,
+                'fields': fields
+            }
+        ))
 
 
 def _create_portal(member_id: str) -> Portals:

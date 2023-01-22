@@ -46,7 +46,7 @@ def card(request):
             return render(request, 'dealcard/no_products.html')
         bx24_obj.get_deal_props()
         if (bx24_obj.deal_props.get('UF_CRM_1674380869') and
-                bx24_obj.deal_props.get('UF_CRM_1674380869') != 0):
+                bx24_obj.deal_props.get('UF_CRM_1674380869') != '0'):
             origin_deal_id = bx24_obj.deal_props.get('UF_CRM_1674380869')
             origin_deal = ObjBitrix24(portal, origin_deal_id)
             origin_deal.get_deal_products()

@@ -6,20 +6,20 @@ from .models import Expenses, Cargo, CompaniesExpense, Employee
 class ExpensesForm(forms.ModelForm):
     """Форма Затрат для услуги"""
 
-    count = forms.DecimalField(
-        min_value=0,
-        max_digits=10,
-        decimal_places=2,
-        label='Количество',
-        required=False,
-    )
-    price = forms.DecimalField(
-        min_value=0,
-        max_digits=10,
-        decimal_places=2,
-        label='Цена',
-        required=False,
-    )
+    # count = forms.DecimalField(
+    #     min_value=0,
+    #     max_digits=10,
+    #     decimal_places=2,
+    #     label='Количество',
+    #     required=False,
+    # )
+    # price = forms.DecimalField(
+    #     min_value=0,
+    #     max_digits=10,
+    #     decimal_places=2,
+    #     label='Цена',
+    #     required=False,
+    # )
 
     def __init__(self, *args, **kwargs):
         portal = kwargs.pop('portal')
@@ -41,6 +41,7 @@ class ExpensesForm(forms.ModelForm):
             queryset=Employee.objects.filter(portal=portal),
             label='Сотрудник'
         )
+        self.fields['expense'].widget.attrs['readonly'] = True
 
     class Meta:
         model = Expenses

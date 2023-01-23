@@ -102,6 +102,20 @@ class Expenses(models.Model):
     deal_id = models.IntegerField(
         verbose_name='ID сделки',
     )
+    count = models.DecimalField(
+        verbose_name='Количество',
+        max_digits=12,
+        decimal_places=2,
+        null=True,
+        blank=True,
+    )
+    price = models.DecimalField(
+        verbose_name='Цена',
+        max_digits=12,
+        decimal_places=2,
+        null=True,
+        blank=True,
+    )
     expense = models.DecimalField(
         verbose_name='Сумма',
         max_digits=12,

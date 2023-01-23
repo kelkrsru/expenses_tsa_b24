@@ -45,6 +45,7 @@ def card(request):
         if not bx24_obj.deal_products:
             return render(request, 'dealcard/no_products.html')
         bx24_obj.get_deal_props()
+        # Если нужно скопировать затраты с оригинальной сделки
         if (bx24_obj.deal_props.get('UF_CRM_1674380869') and
                 bx24_obj.deal_props.get('UF_CRM_1674380869') != '0'):
             origin_deal_id = bx24_obj.deal_props.get('UF_CRM_1674380869')

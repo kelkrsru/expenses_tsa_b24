@@ -123,6 +123,8 @@
     let price = document.getElementById('id_price');
     price.addEventListener('keyup', calculate_sum);
     price.addEventListener('change', calculate_sum);
+    {#let expense = document.getElementById('id_expense');#}
+    {#expense.att#}
 
     function calculate_sum() {
         const count = document.getElementById("id_count");

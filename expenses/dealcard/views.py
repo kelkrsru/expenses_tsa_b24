@@ -65,6 +65,8 @@ def card(request):
                         company=expense.company,
                         employee=expense.employee,
                         type_cost=expense.type_cost,
+                        price=expense.price,
+                        count=expense.count,
                     )
             bx24_obj.update({'UF_CRM_1674380869': 0})
         # Получаем грузы

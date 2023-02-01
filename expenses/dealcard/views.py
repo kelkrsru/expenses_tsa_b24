@@ -178,7 +178,19 @@ def add_expense(request):
 
     form = ExpensesForm(request.POST or None, portal=portal, deal_id=deal_id)
     if not form.is_valid():
-        form.initial = {'count': 12}
+        if 'expense' in request.GET:
+            original_expense = get_object_or_404(Expenses, pk=int(request.GET.get('expense')))
+            form.initial = {
+                'cost_item': original_expense.cost_item,
+                'count': original_expense.count,
+                'price': original_expense.price,
+                'expense': original_expense.expense,
+                'cargo': original_expense.cargo,
+                'company': original_expense.company,
+                'employee': original_expense.employee,
+                'type_cost': original_expense.type_cost,
+                'document': original_expense.document
+            }
         context: dict[str, any] = {
             'form': form,
             'deal_id': deal_id,

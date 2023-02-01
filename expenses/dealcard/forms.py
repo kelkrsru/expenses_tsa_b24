@@ -6,21 +6,6 @@ from .models import Expenses, Cargo, CompaniesExpense, Employee
 class ExpensesForm(forms.ModelForm):
     """Форма Затрат для услуги"""
 
-    # count = forms.DecimalField(
-    #     min_value=0,
-    #     max_digits=10,
-    #     decimal_places=2,
-    #     label='Количество',
-    #     required=False,
-    # )
-    # price = forms.DecimalField(
-    #     min_value=0,
-    #     max_digits=10,
-    #     decimal_places=2,
-    #     label='Цена',
-    #     required=False,
-    # )
-
     def __init__(self, *args, **kwargs):
         portal = kwargs.pop('portal')
         deal_id = kwargs.pop('deal_id')

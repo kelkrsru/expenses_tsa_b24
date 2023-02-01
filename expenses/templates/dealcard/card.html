@@ -112,6 +112,13 @@
                         🗘
                       </a>
                       <a
+                              href="{% url 'dealcard:add_expense' %}?deal_id={{ deal_id }}&member_id={{ portal.member_id }}&expense={{ expense.pk }}"
+                              class="btn btn-info shadow-none btn-small"
+                              title="Копировать"
+                      >
+                        📑
+                      </a>
+                      <a
                               href="{% url 'dealcard:delete_expense' expense.pk %}?deal_id={{ deal_id }}&member_id={{ portal.member_id }}"
                               class="btn btn-danger shadow-none btn-small"
                               title="Удалить"

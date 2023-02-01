@@ -178,6 +178,7 @@ def add_expense(request):
 
     form = ExpensesForm(request.POST or None, portal=portal, deal_id=deal_id)
     if not form.is_valid():
+        form.fields['count'] = 12
         context: dict[str, any] = {
             'form': form,
             'deal_id': deal_id,

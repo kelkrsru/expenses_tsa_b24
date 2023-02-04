@@ -34,7 +34,7 @@ def report_finance(request):
     start_date = request.POST.get('start_date')
     end_date = request.POST.get('end_date')
     deals_for_reports: list[dict[str, any]] = list(dict())
-    expenses_deals = Expenses.objects.filter(portal=portal).values('deal_id').order_by()
+    expenses_deals = Expenses.objects.filter(portal=portal).values('deal_id').annotate(Sum('expense')).order_by()
     if expenses_deals.count() != 0:
         for expense in expenses_deals:
             try:

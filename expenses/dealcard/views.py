@@ -144,9 +144,9 @@ def card(request):
 
     try:
         fields = {
-            'UF_CRM_1675478849': calculations['sum_expenses'],
-            'UF_CRM_1675478980': calculations['profitability'],
-            'UF_CRM_1675479007': calculations['income']
+            'UF_CRM_1675478849': str(calculations['sum_expenses']),
+            'UF_CRM_1675478980': str(calculations['profitability']),
+            'UF_CRM_1675479007': str(calculations['income'])
         }
         bx24_obj.update(fields)
     except RuntimeError as ex:

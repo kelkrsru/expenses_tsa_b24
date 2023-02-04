@@ -34,11 +34,11 @@ def report_finance(request):
     start_date = request.POST.get('start_date')
     end_date = request.POST.get('end_date')
     deals_for_reports: list[dict[str, any]] = list(dict())
-    expenses_deals = Expenses.objects.filter(portal=portal).distinct('deal_id')
+    expenses_deals = Expenses.objects.filter(portal=portal).values('deal_id').annotate(Sum('sum_expenses')).order_by()
     if expenses_deals.count() != 0:
         for expense in expenses_deals:
             try:
-                deal = Deal.objects.get(deal_id=expense.deal_id, portal=portal)
+                deal = Deal.objects.get(deal_id=expense.get('deal_id'), portal=portal)
             except ObjectDoesNotExist:
                 continue
             if deal_type == 'close' and not deal.closed:

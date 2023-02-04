@@ -33,12 +33,7 @@ def report_finance(request):
     start_date = request.POST.get('start_date')
     end_date = request.POST.get('end_date')
     deals_for_reports: list[dict[str, any]] = list(dict())
-    expenses_deals = (Expenses.objects
-                      .values('deal_id')
-                      .filter(portal=portal)
-                      .annotate(sum=Sum('expense'))
-                      .order_by()
-                      )
+    expenses_deals = Expenses.objects.filter(portal=portal)
     if expenses_deals.count() != 0:
         for expense in expenses_deals:
             # bx24_obj = ObjBitrix24(portal, expense['deal_id'])

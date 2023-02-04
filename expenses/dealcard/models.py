@@ -265,6 +265,12 @@ class Deal(models.Model):
         verbose_name='Сделка закрыта',
         default=False,
     )
+    start_date = models.DateField(
+        verbose_name='Дата создания сделки',
+        help_text='Дата создания сделки в Битрикс24',
+        null=True,
+        blank=True,
+    )
     create_date = models.DateTimeField(
         verbose_name='Дата создания',
         auto_now_add=True,

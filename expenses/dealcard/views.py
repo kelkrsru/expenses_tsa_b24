@@ -159,6 +159,9 @@ def card(request):
             id_b24=int(bx24_obj.deal_props.get('ASSIGNED_BY_ID')),
             portal=portal).full_name(),
         'closed': False if bx24_obj.deal_props.get('CLOSED') == 'N' else True,
+        'start_date': datetime.datetime.strptime(
+                 bx24_obj.deal_props['DATE_CREATE'].split('T')[0],
+                 "%Y-%m-%d").date()
     }
     try:
         deal, created = Deal.objects.update_or_create(

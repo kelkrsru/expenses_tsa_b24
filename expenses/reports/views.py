@@ -9,7 +9,7 @@ from django.db.models import Sum
 from django.utils.dateparse import parse_date
 
 from .forms import ReportFinanceForm, ReportBuhForm
-from dealcard.models import Expenses, CompaniesExpense
+from dealcard.models import Expenses, CompaniesExpense, Deal
 from mainpage.models import Portals
 from dealcard.views import ObjBitrix24
 
@@ -41,66 +41,41 @@ def report_finance(request):
                       )
     if expenses_deals.count() != 0:
         for expense in expenses_deals:
-            bx24_obj = ObjBitrix24(portal, expense['deal_id'])
-            try:
-                bx24_obj.get_deal_props()
-                time.sleep(1)
-            except RuntimeError as ex:
-                if ex.args[1] == 'Not found':
-                    continue
-                else:
-                    context = {
-                        'error_name': ex.args[0],
-                        'error_description': ex.args[1],
-                    }
-                    return render(request, 'error.html', context)
-            if deal_type == 'close' and bx24_obj.deal_props['OPENED'] == 'Y':
+            # bx24_obj = ObjBitrix24(portal, expense['deal_id'])
+            # try:
+            #     bx24_obj.get_deal_props()
+            #     time.sleep(1)
+            # except RuntimeError as ex:
+            #     if ex.args[1] == 'Not found':
+            #         continue
+            #     else:
+            #         context = {
+            #             'error_name': ex.args[0],
+            #             'error_description': ex.args[1],
+            #         }
+            #         return render(request, 'error.html', context)
+            deal = Deal.objects.get(deal_id=expense.deal_id, portal=portal)
+            if deal_type == 'close' and not deal.closed:
                 continue
-            elif deal_type == 'open' and bx24_obj.deal_props['CLOSED'] == 'Y':
+            elif deal_type == 'open' and deal.closed:
                 continue
-            deal_date = datetime.datetime.strptime(
-                bx24_obj.deal_props['DATE_CREATE'].split('T')[0],
-                "%Y-%m-%d").date()
-            if not (parse_date(start_date) <= deal_date <= parse_date(end_date)):
+            # deal_date = datetime.datetime.strptime(
+            #     bx24_obj.deal_props['DATE_CREATE'].split('T')[0],
+            #     "%Y-%m-%d").date()
+            if not (parse_date(start_date) <= deal.start_date <= parse_date(end_date)):
                 continue
 
-            # try:
-            #     bx24_obj.get_user(bx24_obj.deal_props['ASSIGNED_BY_ID'])
-            # except RuntimeError as err:
-            #     context = {
-            #         'error_name': 'RuntimeError',
-            #         'error_description': err.args[1],
-            #     }
-            #     return render(request, 'error.html', context)
-            # try:
-            #     bx24_obj.get_company(bx24_obj.deal_props['COMPANY_ID'])
-            # except RuntimeError:
-            #     bx24_obj.company = {
-            #         'ID': 'error',
-            #         'TITLE': 'Нет компании в сделке',
-            #     }
-            #
-            # manager = '{name} {last_name}'.format(
-            #     name=bx24_obj.user[0]['NAME'],
-            #     last_name=bx24_obj.user[0]['LAST_NAME']
-            # )
-            # company = bx24_obj.company['TITLE']
-            # company_id = bx24_obj.company['ID']
-            opportunity = decimal.Decimal(bx24_obj.deal_props['OPPORTUNITY'])
-            sum_expenses = expense['sum']
-            income = decimal.Decimal(opportunity) - sum_expenses
-            profitability = round(income/decimal.Decimal(opportunity)*100)
             deals_for_reports.append(
                 {
-                    'deal_id': expense['deal_id'],
-                    # 'manager': manager,
-                    'opportunity': opportunity,
-                    'sum_expenses': sum_expenses,
-                    'profitability': profitability,
-                    'income': income,
+                    'deal_id': deal.deal_id,
+                    'manager': deal.manager_name,
+                    'opportunity': deal.proceeds,
+                    'sum_expenses': deal.sum_expenses,
+                    'profitability': deal.profitability,
+                    'income': deal.income,
                     'portal_name': portal.name,
-                    # 'company': company,
-                    # 'company_id': company_id,
+                    'company': deal.company_name,
+                    'company_id': deal.company_id,
                 }
             )
         context['deals_for_reports'] = deals_for_reports

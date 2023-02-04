@@ -2,6 +2,7 @@ import decimal
 import datetime
 import time
 
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render
 from django.views.decorators.clickjacking import xframe_options_exempt
 from django.views.decorators.csrf import csrf_exempt
@@ -36,27 +37,14 @@ def report_finance(request):
     expenses_deals = Expenses.objects.filter(portal=portal)
     if expenses_deals.count() != 0:
         for expense in expenses_deals:
-            # bx24_obj = ObjBitrix24(portal, expense['deal_id'])
-            # try:
-            #     bx24_obj.get_deal_props()
-            #     time.sleep(1)
-            # except RuntimeError as ex:
-            #     if ex.args[1] == 'Not found':
-            #         continue
-            #     else:
-            #         context = {
-            #             'error_name': ex.args[0],
-            #             'error_description': ex.args[1],
-            #         }
-            #         return render(request, 'error.html', context)
-            deal = Deal.objects.get(deal_id=expense.deal_id, portal=portal)
+            try:
+                deal = Deal.objects.get(deal_id=expense.deal_id, portal=portal)
+            except ObjectDoesNotExist:
+                continue
             if deal_type == 'close' and not deal.closed:
                 continue
             elif deal_type == 'open' and deal.closed:
                 continue
-            # deal_date = datetime.datetime.strptime(
-            #     bx24_obj.deal_props['DATE_CREATE'].split('T')[0],
-            #     "%Y-%m-%d").date()
             if not (parse_date(start_date) <= deal.start_date <= parse_date(end_date)):
                 continue
 

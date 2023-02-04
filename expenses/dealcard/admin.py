@@ -1,8 +1,18 @@
 from django.contrib import admin
-from .models import Expenses, CompaniesExpense, Cargo, Employee
+from .models import Expenses, CompaniesExpense, Cargo, Employee, Deal
 
 
 class ExpensesAdmin(admin.ModelAdmin):
+    list_display = (
+        'pk',
+        'create_date',
+        'update_date',
+        'portal',
+        'deal_id',
+    )
+
+
+class DealAdmin(admin.ModelAdmin):
     list_display = (
         'pk',
         'create_date',
@@ -39,6 +49,7 @@ class EmployeeAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Expenses, ExpensesAdmin)
+admin.site.register(Deal, DealAdmin)
 admin.site.register(CompaniesExpense, CompaniesExpenseAdmin)
 admin.site.register(Cargo, CargoAdmin)
 admin.site.register(Employee, EmployeeAdmin)

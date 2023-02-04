@@ -84,9 +84,11 @@ class Employee(models.Model):
         unique_together = ['id_b24', 'portal']
         ordering = ['portal']
 
+    def full_name(self):
+        return f'{self.name} {self.last_name}'
+
     def __str__(self):
-        return '{name} {last_name}'.format(name=self.name,
-                                           last_name=self.last_name)
+        return self.full_name()
 
 
 class Expenses(models.Model):
@@ -185,6 +187,98 @@ class Expenses(models.Model):
         verbose_name = 'Затраты'
         verbose_name_plural = 'Затраты'
         ordering = ['update_date']
+
+    def __str__(self):
+        return 'Затраты #{pk}'.format(pk=self.pk)
+
+
+class Deal(models.Model):
+    """Класс для хранения информации по сделкам Битрикс24."""
+    deal_id = models.PositiveIntegerField(
+        verbose_name='ID сделки',
+        help_text='ID сделки из Битрикс24',
+    )
+    portal = models.ForeignKey(
+        Portals,
+        verbose_name='Портал',
+        on_delete=models.PROTECT,
+    )
+    proceeds = models.DecimalField(
+        verbose_name='Выручка',
+        help_text='Сумма сделки',
+        max_digits=12,
+        decimal_places=2,
+        null=True,
+        blank=True,
+    )
+    sum_expenses = models.DecimalField(
+        verbose_name='Затраты',
+        help_text='Сумма затрат по сделке',
+        max_digits=12,
+        decimal_places=2,
+        null=True,
+        blank=True,
+    )
+    income = models.DecimalField(
+        verbose_name='Прибыль',
+        help_text='Сумма прибыли по сделке',
+        max_digits=12,
+        decimal_places=2,
+        null=True,
+        blank=True,
+    )
+    profitability = models.DecimalField(
+        verbose_name='Рентабельность',
+        help_text='Рентабельность сделки в процентах',
+        max_digits=12,
+        decimal_places=2,
+        null=True,
+        blank=True,
+    )
+    company_id = models.PositiveIntegerField(
+        verbose_name='ID компании',
+        help_text='ID компании сделки из Битрикс24',
+        null=True,
+        blank=True,
+    )
+    company_name = models.CharField(
+        verbose_name='Наименование компании',
+        help_text='Наименование компании сделки из Битрикс24',
+        max_length=1024,
+        null=True,
+        blank=True,
+    )
+    manager_id = models.PositiveIntegerField(
+        verbose_name='ID менеджера',
+        help_text='ID менеджера сделки из Битрикс24',
+        null=True,
+        blank=True,
+    )
+    manager_name = models.CharField(
+        verbose_name='Менеджер',
+        help_text='Имя менеджера сделки из Битрикс24',
+        max_length=512,
+        null=True,
+        blank=True,
+    )
+    closed = models.BooleanField(
+        verbose_name='Сделка закрыта',
+        default=False,
+    )
+    create_date = models.DateTimeField(
+        verbose_name='Дата создания',
+        auto_now_add=True,
+    )
+    update_date = models.DateTimeField(
+        verbose_name='Дата изменения',
+        auto_now=True,
+    )
+
+    class Meta:
+        verbose_name = 'Сделка'
+        verbose_name_plural = 'Сделки'
+        ordering = ['update_date']
+        unique_together = ['deal_id', 'portal']
 
     def __str__(self):
         return 'Затраты #{pk}'.format(pk=self.pk)

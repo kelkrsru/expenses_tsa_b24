@@ -10,7 +10,7 @@ from pybitrix24 import Bitrix24
 
 from mainpage.models import Portals
 from .forms import ExpensesForm
-from .models import Expenses, Cargo, CompaniesExpense, Employee
+from .models import Expenses, Cargo, CompaniesExpense, Employee, Deal
 
 CLIENT_ID: str = 'local.63467384b9f750.01806162'
 CLIENT_SECRET: str = 'Phmcn8NpEzGqssG2Zj7m4tIaLylHHSj4QoIOFVr8Z7qqFJbsGN'
@@ -143,12 +143,26 @@ def card(request):
         calculations['profitability'] = 0
 
     try:
-        fields = {
-            'UF_CRM_1675481495': str(calculations['sum_expenses']),
-            'UF_CRM_1675478980': str(calculations['profitability']),
-            'UF_CRM_1675481542': str(calculations['income'])
-        }
-        bx24_obj.update(fields)
+        bx24_obj.get_company(bx24_obj.deal_props['COMPANY_ID'])
+    except RuntimeError:
+        bx24_obj.company = {'ID': 0, 'TITLE': 'Нет компании в сделке'}
+
+    deal_defaults = {
+        'proceeds': calculations['proceeds'],
+        'sum_expenses': calculations['sum_expenses'],
+        'income': calculations['income'],
+        'profitability': calculations['profitability'],
+        'company_id': bx24_obj.company.get('ID'),
+        'company_name': bx24_obj.company.get('TITLE'),
+        'manager_id': bx24_obj.deal_props.get('ASSIGNED_BY_ID'),
+        'manager_name': Employee.objects.get(
+            id_b24=int(bx24_obj.deal_props.get('ASSIGNED_BY_ID')),
+            portal=portal).full_name(),
+        'closed': False if bx24_obj.deal_props.get('CLOSED') == 'N' else True,
+    }
+    try:
+        deal, created = Deal.objects.update_or_create(
+            deal_id=deal_id, portal=portal, defaults=deal_defaults)
     except RuntimeError as ex:
         return render(request, 'error.html', {
             'error_name': ex.args[0],

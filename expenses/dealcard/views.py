@@ -142,6 +142,19 @@ def card(request):
     else:
         calculations['profitability'] = 0
 
+    try:
+        fields = {
+            'UF_CRM_1675478849': calculations['sum_expenses'],
+            'UF_CRM_1675478980': calculations['profitability'],
+            'UF_CRM_1675479007': calculations['income']
+        }
+        bx24_obj.update(fields)
+    except RuntimeError as ex:
+        return render(request, 'error.html', {
+            'error_name': ex.args[0],
+            'error_description': ex.args[1]
+        })
+
     context: dict[str, any] = {
         'title': title,
         'portal': portal,

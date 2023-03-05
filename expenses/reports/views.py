@@ -1,18 +1,12 @@
 import decimal
-import datetime
-import time
-
-from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render
 from django.views.decorators.clickjacking import xframe_options_exempt
 from django.views.decorators.csrf import csrf_exempt
-from django.db.models import Sum
 from django.utils.dateparse import parse_date
 
 from .forms import ReportFinanceForm, ReportBuhForm
 from dealcard.models import Expenses, CompaniesExpense, Deal
 from mainpage.models import Portals
-from dealcard.views import ObjBitrix24
 
 
 @xframe_options_exempt
@@ -78,6 +72,7 @@ def report_buh(request):
         return render(request, template, context)
 
     expenses_for_reports: list[dict[str, any]] = list(dict())
+    total_sum = 0.00
     expenses_deals = (Expenses.objects
                       .select_related('company')
                       .filter(portal=portal)
@@ -127,5 +122,7 @@ def report_buh(request):
                 'portal_name': portal.name,
             }
         )
+        total_sum += expense.expense
     context['expenses_for_reports'] = expenses_for_reports
+    context['total_sum'] = total_sum
     return render(request, template, context)

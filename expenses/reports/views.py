@@ -72,7 +72,7 @@ def report_buh(request):
         return render(request, template, context)
 
     expenses_for_reports: list[dict[str, any]] = list(dict())
-    total_sum = 0.00
+    total_sum = decimal.Decimal(0.00)
     expenses_deals = (Expenses.objects
                       .select_related('company')
                       .filter(portal=portal)

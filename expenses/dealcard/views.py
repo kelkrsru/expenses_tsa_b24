@@ -101,8 +101,8 @@ def card(request):
                 portal=portal,
                 defaults={
                     'id_b24': user['ID'],
-                    'name': user['NAME'],
-                    'last_name': user['LAST_NAME'],
+                    'name': user['NAME'] if 'NAME' in user else 'Не указано',
+                    'last_name': user['LAST_NAME'] if 'LAST_NAME' in user else 'Не указано',
                     'portal': portal,
                 }
             )

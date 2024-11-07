@@ -7,6 +7,7 @@ mypy
 mypy-extensions
 mysqlclient
 openpyxl
+psycopg2
 pybitrix24
 python-dotenv
 sqlparse

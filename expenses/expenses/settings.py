@@ -8,9 +8,11 @@ load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 SECRET_KEY = os.getenv('SECRET_KEY', default='12345')
 
-DEBUG = os.getenv('DEBUG', default=False)
+DEBUG = False if os.getenv('DEBUG') == 'False' else True
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', default='').split(' ')
+
+PRODUCTION = False if os.getenv('PRODUCTION') == 'False' else True
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -92,8 +94,13 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-#STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+MEDIA_URL = 'media/'
+if PRODUCTION:
+    STATIC_ROOT = os.getenv('PATH_STATIC_ROOT')
+    MEDIA_ROOT = os.getenv('PATH_MEDIA_ROOT')
+else:
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

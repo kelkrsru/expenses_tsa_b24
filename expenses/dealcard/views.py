@@ -12,8 +12,8 @@ from mainpage.models import Portals
 from .forms import ExpensesForm
 from .models import Expenses, Cargo, CompaniesExpense, Employee, Deal
 
-CLIENT_ID: str = 'local.6739db79577c61.36049156'
-CLIENT_SECRET: str = 'rjClDF5TjNjrQMm3oR52l6xLfGfutdcfxUnT1px6ztlO623i5p'
+CLIENT_ID: str = 'local.6739de2e0d1cb1.91394126'
+CLIENT_SECRET: str = 'HNpEBA3KocfHNlSmFVJKfoVmlDvFSqI8jN8nGG9F1gAoll1yd3'
 SMART_ID: int = 177
 FIELD_NAME_COMPANY_EXPENSE_FILTER = 'UF_CRM_1644559561'
 

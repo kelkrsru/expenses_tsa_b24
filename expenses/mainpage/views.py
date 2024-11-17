@@ -10,8 +10,8 @@ from pybitrix24 import Bitrix24
 from .models import CostItems, Portals
 from .forms import AddCostItemForm, CostItemForm
 
-CLIENT_ID: str = 'local.63467384b9f750.01806162'
-CLIENT_SECRET: str = 'Phmcn8NpEzGqssG2Zj7m4tIaLylHHSj4QoIOFVr8Z7qqFJbsGN'
+CLIENT_ID: str = 'local.6739de2e0d1cb1.91394126'
+CLIENT_SECRET: str = 'HNpEBA3KocfHNlSmFVJKfoVmlDvFSqI8jN8nGG9F1gAoll1yd3'
 
 
 @xframe_options_exempt
@@ -94,7 +94,7 @@ def install(request):
 
     params: dict[str, str] = {
         'PLACEMENT': 'CRM_DEAL_DETAIL_TAB',
-        'HANDLER': 'https://expenses.devkeltest.ru/card/',
+        'HANDLER': 'https://expenses.transstaravia24.ru/card/',
         'TITLE': 'Затраты',
         'DESCRIPTION': 'Приложение для учета затрат в сделках по услугам'
     }
